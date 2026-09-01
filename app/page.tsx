@@ -9,7 +9,7 @@ import { ThemeToggle } from '@/components/theme-toggle';
 
 const projects = [
   { name: 'Reflax', detail: 'Health companion app using HealthKit, adaptive scheduling, accessibility support, and secure on-device health-data handling.', stack: 'SwiftUI · HealthKit', href: 'https://testflight.apple.com/join/J77sp3K5', image: '/projects/reflax.png' },
-  { name: 'Binus Xplore', detail: 'Apple Developer Academy BINUS@Alam Sutera project.', stack: 'Swift', href: 'https://github.com/mzmznasipadang/Binus-Xplore', image: '/projects/binus-xplore.png' },
+  { name: 'Coco', detail: 'A native iOS travel activity booking app with discovery, search, booking flows, and trip management.', stack: 'UIKit · MVVM', href: 'https://github.com/mzmznasipadang/LinCoCoCooo', image: '/projects/coco.png' },
   { name: 'CountDown', detail: 'A native macOS countdown bar application.', stack: 'macOS · Swift', href: 'https://github.com/mzmznasipadang/CountDown', image: '/projects/countdown.png' },
   { name: 'ADASayembara', detail: 'A project delivered across iOS and web.', stack: 'iOS · Web', href: 'https://github.com/mzmznasipadang/ADASayembara', image: '/projects/adasayembara.png' },
 ];
