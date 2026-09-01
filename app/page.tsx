@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 const projects = [
   { name: 'Reflax', detail: 'Health companion app using HealthKit, adaptive scheduling, accessibility support, and secure on-device health-data handling.', stack: 'SwiftUI · HealthKit', href: 'https://testflight.apple.com/join/J77sp3K5' },
@@ -22,7 +23,7 @@ export default function Home() {
         <nav aria-label="Primary" className="hidden items-center gap-6 text-sm text-muted-foreground sm:flex">
           <a className="transition-colors hover:text-foreground" href="#work">Work</a><a className="transition-colors hover:text-foreground" href="#stack">Stack</a><a className="transition-colors hover:text-foreground" href="#contact">Contact</a>
         </nav>
-        <Button nativeButton={false} render={<a aria-label="Email Victor" href="mailto:info@naspadstudio.id" />} size="sm">Let&apos;s talk <ArrowUpRight /></Button>
+        <div className="flex items-center gap-2"><ThemeToggle /><Button nativeButton={false} render={<a aria-label="Email Victor" href="mailto:info@naspadstudio.id" />} size="sm">Let&apos;s talk <ArrowUpRight /></Button></div>
       </header>
 
       <section className="mx-auto grid max-w-6xl gap-12 px-6 pb-28 pt-16 lg:grid-cols-[1.4fr_0.6fr] lg:px-8 lg:pb-40 lg:pt-28" id="top">
