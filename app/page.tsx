@@ -1,4 +1,5 @@
 import { ArrowDown, ArrowUpRight, Code2, Download, Mail } from 'lucide-react';
+import Image from 'next/image';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -7,10 +8,10 @@ import { Separator } from '@/components/ui/separator';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 const projects = [
-  { name: 'Reflax', detail: 'Health companion app using HealthKit, adaptive scheduling, accessibility support, and secure on-device health-data handling.', stack: 'SwiftUI · HealthKit', href: 'https://testflight.apple.com/join/J77sp3K5' },
-  { name: 'Binus Xplore', detail: 'Apple Developer Academy BINUS@Alam Sutera project.', stack: 'Swift', href: 'https://github.com/mzmznasipadang/Binus-Xplore' },
-  { name: 'CountDown', detail: 'A native macOS countdown bar application.', stack: 'macOS · Swift', href: 'https://github.com/mzmznasipadang/CountDown' },
-  { name: 'ADASayembara', detail: 'A project delivered across iOS and web.', stack: 'iOS · Web', href: 'https://github.com/mzmznasipadang/ADASayembara' },
+  { name: 'Reflax', detail: 'Health companion app using HealthKit, adaptive scheduling, accessibility support, and secure on-device health-data handling.', stack: 'SwiftUI · HealthKit', href: 'https://testflight.apple.com/join/J77sp3K5', image: '/projects/reflax.png' },
+  { name: 'Binus Xplore', detail: 'Apple Developer Academy BINUS@Alam Sutera project.', stack: 'Swift', href: 'https://github.com/mzmznasipadang/Binus-Xplore', image: '/projects/binus-xplore.png' },
+  { name: 'CountDown', detail: 'A native macOS countdown bar application.', stack: 'macOS · Swift', href: 'https://github.com/mzmznasipadang/CountDown', image: '/projects/countdown.png' },
+  { name: 'ADASayembara', detail: 'A project delivered across iOS and web.', stack: 'iOS · Web', href: 'https://github.com/mzmznasipadang/ADASayembara', image: '/projects/adasayembara.png' },
 ];
 
 const mobileStack = ['Swift', 'SwiftUI', 'UIKit', 'HealthKit', 'MVVM', 'Xcode Cloud', 'TestFlight'];
@@ -24,7 +25,7 @@ export default function Home() {
         <nav aria-label="Primary" className="hidden items-center gap-6 text-sm text-muted-foreground sm:flex">
           <a className="transition-colors hover:text-foreground" href="#work">Work</a><a className="transition-colors hover:text-foreground" href="#stack">Stack</a><a className="transition-colors hover:text-foreground" href="#contact">Contact</a>
         </nav>
-        <div className="flex items-center gap-2"><ThemeToggle /><Button nativeButton={false} render={<a aria-label="Download Victor's iOS resume" download href="/victor-chandra-ios-resume.pdf" />} size="sm">Download iOS resume <Download /></Button></div>
+        <div className="flex items-center gap-2"><ThemeToggle /><Button nativeButton={false} render={<a aria-label="Download Victor's resume" download href="/victor-chandra-ios-resume.pdf" />} size="sm">Download Resume <Download /></Button></div>
       </header>
 
       <section className="mx-auto grid max-w-6xl gap-12 px-6 pb-28 pt-16 lg:grid-cols-[1.4fr_0.6fr] lg:px-8 lg:pb-40 lg:pt-28" id="top">
@@ -49,7 +50,7 @@ export default function Home() {
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => <Card className="border border-border bg-background shadow-none transition-transform duration-200 hover:-translate-y-1" key={project.name}>
               <CardHeader><Badge variant="secondary">{project.stack}</Badge><CardTitle className="mt-7 text-2xl tracking-[-0.04em]">{project.name}</CardTitle><CardDescription className="max-w-sm leading-6">{project.detail}</CardDescription></CardHeader>
-              <CardContent className="mt-8 flex min-h-36 items-end bg-muted/45 py-6"><span className="text-5xl font-semibold tracking-[-0.08em] text-primary/20">{project.name.slice(0, 2)}</span></CardContent>
+              <CardContent className="mt-8 p-0"><Image alt={`${project.name} project thumbnail`} className="aspect-[16/10] w-full object-cover" height={640} src={project.image} unoptimized width={1024} /></CardContent>
               <CardFooter><Button nativeButton={false} render={<a aria-label={`View ${project.name} repository`} href={project.href} rel="noreferrer" target="_blank" />} variant="link">View repository <ArrowUpRight /></Button></CardFooter>
             </Card>)}
           </div>
