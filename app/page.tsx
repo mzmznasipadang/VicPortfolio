@@ -40,7 +40,7 @@ export default function Home() {
         </div>
         <aside className="self-end border-l border-border pl-6 lg:pl-8">
           <Image alt="Victor Chandra" className="mb-5 size-20 rounded-full border border-border object-cover" height={160} src="https://avatars.githubusercontent.com/u/41635105?v=4" unoptimized width={160} />
-          <p className="font-medium tracking-tight">Victor Chandra</p><p className="mt-1 text-sm leading-6 text-muted-foreground">Tangerang Selatan, Indonesia<br />Apple Developer Academy</p>
+          <p className="font-medium tracking-tight">Victor Chandra</p><p className="mt-1 text-sm leading-6 text-muted-foreground">Tangerang Selatan, Indonesia<br />Dotcross AI</p>
         </aside>
       </section>
 

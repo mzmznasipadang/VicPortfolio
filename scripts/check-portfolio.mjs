@@ -15,6 +15,7 @@ for (const image of ['reflax.png', 'coco.png', 'countdown.png', 'adasayembara.pn
 assert.ok(!page.includes('Binus Xplore'), 'Binus Xplore should be removed');
 assert.ok(!page.includes('naspadstudio.id'), 'Studio link should be removed');
 assert.ok(!page.includes('dribbble.com'), 'Dribbble link should be removed');
+assert.ok(page.includes('Tangerang Selatan, Indonesia<br />Dotcross AI'));
 
 const themeToggle = readFileSync(new URL('../components/theme-toggle.tsx', import.meta.url), 'utf8');
 assert.ok(themeToggle.includes('Toggle night mode'));
