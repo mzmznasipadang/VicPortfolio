@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUpRight, Code2, Mail } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Code2, Download, Mail } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,8 @@ import { ThemeToggle } from '@/components/theme-toggle';
 const projects = [
   { name: 'Reflax', detail: 'Health companion app using HealthKit, adaptive scheduling, accessibility support, and secure on-device health-data handling.', stack: 'SwiftUI · HealthKit', href: 'https://testflight.apple.com/join/J77sp3K5' },
   { name: 'Binus Xplore', detail: 'Apple Developer Academy BINUS@Alam Sutera project.', stack: 'Swift', href: 'https://github.com/mzmznasipadang/Binus-Xplore' },
-  { name: 'BLink', detail: "BLink, with Vic's mixes.", stack: 'Swift', href: 'https://github.com/mzmznasipadang/BLink-Vic' },
+  { name: 'CountDown', detail: 'A native macOS countdown bar application.', stack: 'macOS · Swift', href: 'https://github.com/mzmznasipadang/CountDown' },
+  { name: 'ADASayembara', detail: 'A project delivered across iOS and web.', stack: 'iOS · Web', href: 'https://github.com/mzmznasipadang/ADASayembara' },
 ];
 
 const mobileStack = ['Swift', 'SwiftUI', 'UIKit', 'HealthKit', 'MVVM', 'Xcode Cloud', 'TestFlight'];
@@ -23,7 +24,7 @@ export default function Home() {
         <nav aria-label="Primary" className="hidden items-center gap-6 text-sm text-muted-foreground sm:flex">
           <a className="transition-colors hover:text-foreground" href="#work">Work</a><a className="transition-colors hover:text-foreground" href="#stack">Stack</a><a className="transition-colors hover:text-foreground" href="#contact">Contact</a>
         </nav>
-        <div className="flex items-center gap-2"><ThemeToggle /><Button nativeButton={false} render={<a aria-label="Email Victor" href="mailto:info@naspadstudio.id" />} size="sm">Let&apos;s talk <ArrowUpRight /></Button></div>
+        <div className="flex items-center gap-2"><ThemeToggle /><Button nativeButton={false} render={<a aria-label="Download Victor's iOS resume" download href="/victor-chandra-ios-resume.pdf" />} size="sm">Download iOS resume <Download /></Button></div>
       </header>
 
       <section className="mx-auto grid max-w-6xl gap-12 px-6 pb-28 pt-16 lg:grid-cols-[1.4fr_0.6fr] lg:px-8 lg:pb-40 lg:pt-28" id="top">
