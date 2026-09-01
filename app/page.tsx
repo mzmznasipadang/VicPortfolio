@@ -29,8 +29,8 @@ export default function Home() {
       <section className="mx-auto grid max-w-6xl gap-12 px-6 pb-28 pt-16 lg:grid-cols-[1.4fr_0.6fr] lg:px-8 lg:pb-40 lg:pt-28" id="top">
         <div className="max-w-3xl">
           <p className="mb-6 text-xs font-semibold uppercase tracking-[0.18em] text-primary">iOS Engineer · Indonesia</p>
-          <h1 className="text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.055em] sm:text-7xl">Thoughtful mobile products, built with care.</h1>
-          <p className="mt-8 max-w-xl text-lg leading-8 text-muted-foreground">I&apos;m Victor Chandra, an iOS engineer trained at Apple Developer Academy. I&apos;ve shipped six Swift and SwiftUI apps, and built delivery automation that cut manual release overhead by 35%.</p>
+          <h1 className="text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.055em] text-black dark:text-white sm:text-7xl">Thoughtful mobile products, built with care.</h1>
+          <p className="mt-8 max-w-xl text-lg leading-8 text-black dark:text-white">I&apos;m Victor Chandra, an iOS engineer trained at Apple Developer Academy. I&apos;ve shipped six Swift and SwiftUI apps, and built delivery automation that cut manual release overhead by 35%.</p>
           <div className="mt-10 flex flex-wrap gap-3">
             <Button nativeButton={false} render={<a aria-label="Jump to selected work" href="#work" />} size="lg">Selected work <ArrowDown /></Button>
             <Button nativeButton={false} render={<a aria-label="Visit Victor's GitHub profile" href="https://github.com/mzmznasipadang" rel="noreferrer" target="_blank" />} size="lg" variant="outline"><Code2 /> GitHub</Button>

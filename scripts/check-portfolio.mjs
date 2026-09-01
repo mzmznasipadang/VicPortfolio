@@ -9,3 +9,4 @@ for (const text of ['Reflax', 'Apple Developer Academy', 'Dotcross AI', '78%', '
 
 const themeToggle = readFileSync(new URL('../components/theme-toggle.tsx', import.meta.url), 'utf8');
 assert.ok(themeToggle.includes('Toggle night mode'));
+assert.ok(page.includes('text-black dark:text-white'));
