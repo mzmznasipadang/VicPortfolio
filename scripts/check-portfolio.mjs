@@ -24,3 +24,7 @@ assert.ok(page.includes('Tangerang Selatan, Indonesia<br />Dotcross AI'));
 const themeToggle = readFileSync(new URL('../components/theme-toggle.tsx', import.meta.url), 'utf8');
 assert.ok(themeToggle.includes('Toggle night mode'));
 assert.ok(page.includes('text-black dark:text-white'));
+assert.ok(page.includes("import { gsap } from 'gsap'"));
+assert.ok(page.includes("prefers-reduced-motion: no-preference"));
+assert.ok(page.includes('motion-hero'));
+assert.ok(page.includes('motion-project'));

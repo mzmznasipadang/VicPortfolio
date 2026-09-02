@@ -1,5 +1,9 @@
+'use client';
+
 import { ArrowDown, ArrowUpRight, Code2, Download, Mail } from 'lucide-react';
 import Image from 'next/image';
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -18,8 +22,22 @@ const mobileStack = ['Swift', 'SwiftUI', 'UIKit', 'HealthKit', 'MVVM', 'Xcode Cl
 const engineeringStack = ['Python', 'AWS Lambda', 'REST APIs', 'PostgreSQL', 'Supabase', 'GitHub Actions', 'Jenkins', 'Docker'];
 
 export default function Home() {
+  const page = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const media = gsap.matchMedia();
+    media.add('(prefers-reduced-motion: no-preference)', () => {
+      const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      timeline
+        .from('.motion-hero', { duration: 0.7, opacity: 0, y: 24 })
+        .from('.motion-aside', { duration: 0.6, opacity: 0, y: 16 }, '<0.18')
+        .from('.motion-project', { duration: 0.5, opacity: 0, stagger: 0.08, y: 16 }, '<0.2');
+    }, page);
+    return () => media.revert();
+  }, []);
+
   return (
-    <main>
+    <main ref={page}>
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6 lg:px-8">
         <a className="text-sm font-semibold tracking-tight" href="#top">VC<span className="text-primary">.</span></a>
         <nav aria-label="Primary" className="hidden items-center gap-6 text-sm text-muted-foreground sm:flex">
@@ -29,7 +47,7 @@ export default function Home() {
       </header>
 
       <section className="mx-auto grid max-w-6xl gap-12 px-6 pb-28 pt-16 lg:grid-cols-[1.4fr_0.6fr] lg:px-8 lg:pb-40 lg:pt-28" id="top">
-        <div className="max-w-3xl">
+        <div className="motion-hero max-w-3xl">
           <p className="mb-6 text-xs font-semibold uppercase tracking-[0.18em] text-primary">iOS Engineer · Indonesia</p>
           <h1 className="text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.055em] text-black dark:text-white sm:text-7xl">Thoughtful mobile products, built with care.</h1>
           <p className="mt-8 max-w-xl text-lg leading-8 text-black dark:text-white">I&apos;m Victor Chandra, an iOS engineer trained at Apple Developer Academy. I&apos;ve shipped six Swift and SwiftUI apps, and built delivery automation that cut manual release overhead by 35%.</p>
@@ -38,7 +56,7 @@ export default function Home() {
             <Button nativeButton={false} render={<a aria-label="Visit Victor's GitHub profile" href="https://github.com/mzmznasipadang" rel="noreferrer" target="_blank" />} size="lg" variant="outline"><Code2 /> GitHub</Button>
           </div>
         </div>
-        <aside className="self-end border-l border-border pl-6 lg:pl-8">
+        <aside className="motion-aside self-end border-l border-border pl-6 lg:pl-8">
           <Image alt="Victor Chandra" className="mb-5 size-20 rounded-full border border-border object-cover" height={160} src="https://avatars.githubusercontent.com/u/41635105?v=4" unoptimized width={160} />
           <p className="font-medium tracking-tight">Victor Chandra</p><p className="mt-1 text-sm leading-6 text-muted-foreground">Tangerang Selatan, Indonesia<br />Dotcross AI</p>
         </aside>
@@ -48,7 +66,7 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-6 py-20 lg:px-8 lg:py-28">
           <div className="mb-10 flex items-end justify-between gap-6"><div><p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Selected work</p><h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">Made for the small screen.</h2></div><a className="hidden text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:block" href="https://github.com/mzmznasipadang" rel="noreferrer" target="_blank">View GitHub <ArrowUpRight className="ml-1 inline size-3.5" /></a></div>
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project) => <Card className="border border-border bg-background shadow-none transition-transform duration-200 hover:-translate-y-1" key={project.name}>
+            {projects.map((project) => <Card className="motion-project border border-border bg-background shadow-none transition-transform duration-200 hover:-translate-y-1" key={project.name}>
               <CardHeader><Badge variant="secondary">{project.stack}</Badge><CardTitle className="mt-7 text-2xl tracking-[-0.04em]">{project.name}</CardTitle><CardDescription className="max-w-sm leading-6">{project.detail}</CardDescription></CardHeader>
               <CardContent className="mt-8 p-0"><Image alt={`${project.name} project thumbnail`} className="aspect-[16/10] w-full object-cover" height={640} src={project.image} unoptimized width={1024} /></CardContent>
               <CardFooter><Button nativeButton={false} render={<a aria-label={`View ${project.name} repository`} href={project.href} rel="noreferrer" target="_blank" />} variant="link">View repository <ArrowUpRight /></Button></CardFooter>
