@@ -7,6 +7,10 @@ for (const text of ['Reflax', 'CountDown', 'ADASayembara', 'Coco', 'Download Res
   assert.ok(page.includes(text), `Missing ${text}`);
 }
 
+for (const text of ['counts down to upcoming calendar events in real time', 'live queue status across attendees and admins']) {
+  assert.ok(page.includes(text), `Missing project detail: ${text}`);
+}
+
 for (const image of ['reflax.png', 'coco.png', 'countdown.png', 'adasayembara.png']) {
   assert.ok(page.includes(`projects/${image}`), `Missing image reference: ${image}`);
   assert.ok(existsSync(new URL(`../public/projects/${image}`, import.meta.url)), `Missing image asset: ${image}`);
