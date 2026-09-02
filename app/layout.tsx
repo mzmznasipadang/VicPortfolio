@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://mzmznasipadang.github.io/VicPortfolio'),
   title: 'Victor Chandra — iOS Engineer',
   description: 'iOS engineer and software developer building thoughtful mobile products.',
+  icons: { icon: 'favicon.svg' },
   openGraph: {
     title: 'Victor Chandra — iOS Engineer',
     description: 'iOS engineer and software developer building thoughtful mobile products.',

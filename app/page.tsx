@@ -8,10 +8,10 @@ import { Separator } from '@/components/ui/separator';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 const projects = [
-  { name: 'Reflax', detail: 'Health companion app using HealthKit, adaptive scheduling, accessibility support, and secure on-device health-data handling.', stack: 'SwiftUI · HealthKit', href: 'https://testflight.apple.com/join/J77sp3K5', image: '/projects/reflax.png' },
-  { name: 'Coco', detail: 'A native iOS travel activity booking app with discovery, search, booking flows, and trip management.', stack: 'UIKit · MVVM', href: 'https://github.com/mzmznasipadang/LinCoCoCooo', image: '/projects/coco.png' },
-  { name: 'CountDown', detail: 'A native macOS countdown bar application.', stack: 'macOS · Swift', href: 'https://github.com/mzmznasipadang/CountDown', image: '/projects/countdown.png' },
-  { name: 'ADASayembara', detail: 'A project delivered across iOS and web.', stack: 'iOS · Web', href: 'https://github.com/mzmznasipadang/ADASayembara', image: '/projects/adasayembara.png' },
+  { name: 'Reflax', detail: 'Health companion app using HealthKit, adaptive scheduling, accessibility support, and secure on-device health-data handling.', stack: 'SwiftUI · HealthKit', href: 'https://testflight.apple.com/join/J77sp3K5', image: 'projects/reflax.png' },
+  { name: 'Coco', detail: 'A native iOS travel activity booking app with discovery, search, booking flows, and trip management.', stack: 'UIKit · MVVM', href: 'https://github.com/mzmznasipadang/LinCoCoCooo', image: 'projects/coco.png' },
+  { name: 'CountDown', detail: 'A native macOS countdown bar application.', stack: 'macOS · Swift', href: 'https://github.com/mzmznasipadang/CountDown', image: 'projects/countdown.png' },
+  { name: 'ADASayembara', detail: 'A project delivered across iOS and web.', stack: 'iOS · Web', href: 'https://github.com/mzmznasipadang/ADASayembara', image: 'projects/adasayembara.png' },
 ];
 
 const mobileStack = ['Swift', 'SwiftUI', 'UIKit', 'HealthKit', 'MVVM', 'Xcode Cloud', 'TestFlight'];
@@ -25,7 +25,7 @@ export default function Home() {
         <nav aria-label="Primary" className="hidden items-center gap-6 text-sm text-muted-foreground sm:flex">
           <a className="transition-colors hover:text-foreground" href="#work">Work</a><a className="transition-colors hover:text-foreground" href="#stack">Stack</a><a className="transition-colors hover:text-foreground" href="#contact">Contact</a>
         </nav>
-        <div className="flex items-center gap-2"><ThemeToggle /><Button nativeButton={false} render={<a aria-label="Download Victor's resume" download href="/victor-chandra-ios-resume.pdf" />} size="sm">Download Resume <Download /></Button></div>
+        <div className="flex items-center gap-2"><ThemeToggle /><Button nativeButton={false} render={<a aria-label="Download Victor's resume" download href="victor-chandra-ios-resume.pdf" />} size="sm">Download Resume <Download /></Button></div>
       </header>
 
       <section className="mx-auto grid max-w-6xl gap-12 px-6 pb-28 pt-16 lg:grid-cols-[1.4fr_0.6fr] lg:px-8 lg:pb-40 lg:pt-28" id="top">

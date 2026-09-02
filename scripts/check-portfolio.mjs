@@ -8,7 +8,7 @@ for (const text of ['Reflax', 'CountDown', 'ADASayembara', 'Coco', 'Download Res
 }
 
 for (const image of ['reflax.png', 'coco.png', 'countdown.png', 'adasayembara.png']) {
-  assert.ok(page.includes(`/projects/${image}`), `Missing image reference: ${image}`);
+  assert.ok(page.includes(`projects/${image}`), `Missing image reference: ${image}`);
   assert.ok(existsSync(new URL(`../public/projects/${image}`, import.meta.url)), `Missing image asset: ${image}`);
 }
 
