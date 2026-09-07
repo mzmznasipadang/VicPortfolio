@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from 'node:fs';
 
 const page = readFileSync(new URL('../app/page.tsx', import.meta.url), 'utf8');
 
-for (const text of ['Reflax', 'CountDown', 'ADASayembara', 'Coco', 'Download Resume', 'Apple Developer Academy', 'Dotcross AI', '78%', 'HealthKit', 'Bina Nusantara University', 'vichndrlie@outlook.com', 'https://avatars.githubusercontent.com/u/41635105?v=4', 'https://linkedin.com/in/mzmznasipadang', 'id="work"', 'id="stack"', 'id="contact"']) {
+for (const text of ['Reflax', 'CountDown', 'ADASayembara', 'Coco', 'AshMap', 'Download Resume', 'Apple Developer Academy', 'Dotcross AI', '78%', 'HealthKit', 'Bina Nusantara University', 'vichndrlie@outlook.com', 'https://avatars.githubusercontent.com/u/41635105?v=4', 'https://linkedin.com/in/mzmznasipadang', 'id="work"', 'id="stack"', 'id="contact"']) {
   assert.ok(page.includes(text), `Missing ${text}`);
 }
 
@@ -11,7 +11,7 @@ for (const text of ['counts down to upcoming calendar events in real time', 'liv
   assert.ok(page.includes(text), `Missing project detail: ${text}`);
 }
 
-for (const image of ['reflax.png', 'coco.png', 'countdown.png', 'adasayembara.png']) {
+for (const image of ['reflax.png', 'coco.png', 'countdown.png', 'adasayembara.png', 'ashmap.png']) {
   assert.ok(page.includes(`projects/${image}`), `Missing image reference: ${image}`);
   assert.ok(existsSync(new URL(`../public/projects/${image}`, import.meta.url)), `Missing image asset: ${image}`);
 }

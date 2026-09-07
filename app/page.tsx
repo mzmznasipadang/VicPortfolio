@@ -16,6 +16,7 @@ const projects = [
   { name: 'Coco', detail: 'A native iOS travel activity booking app with discovery, search, booking flows, and trip management.', stack: 'UIKit · MVVM', href: 'https://github.com/mzmznasipadang/LinCoCoCooo', image: 'projects/coco.png' },
   { name: 'CountDown', detail: 'A lightweight macOS menu bar app that counts down to upcoming calendar events in real time, with meeting links, snooze controls, and calendar-aware alerts.', stack: 'macOS · Swift', href: 'https://github.com/mzmznasipadang/CountDown', image: 'projects/countdown.png' },
   { name: 'ADASayembara', detail: 'A real-time queue management system for the Shoot & Win event, with live queue status across attendees and admins, QR access, notifications, and protected admin controls.', stack: 'iOS · Web', href: 'https://github.com/mzmznasipadang/ADASayembara', image: 'projects/adasayembara.png' },
+  { name: 'AshMap', detail: 'A live Indonesian volcanic ash advisory map that plots real Darwin VAAC ash polygons, wind vectors, forecast drift, airport impacts, and GIS-ready data.', stack: 'Web · GIS', href: 'https://github.com/mzmznasipadang/ash-map', image: 'projects/ashmap.png' },
 ];
 
 const mobileStack = ['Swift', 'SwiftUI', 'UIKit', 'HealthKit', 'MVVM', 'Xcode Cloud', 'TestFlight'];
