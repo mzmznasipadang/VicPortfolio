@@ -2,6 +2,7 @@
 
 import { ArrowDown, ArrowUpRight, Code2, Download, Mail } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
@@ -39,12 +40,12 @@ export default function Home() {
 
   return (
     <main ref={page}>
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6 lg:px-8">
+      <header className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-6 py-6 lg:px-8">
         <a className="text-sm font-semibold tracking-tight" href="#top">VC<span className="text-primary">.</span></a>
-        <nav aria-label="Primary" className="hidden items-center gap-6 text-sm text-muted-foreground sm:flex">
+        <nav aria-label="Primary" className="order-3 flex w-full flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground sm:order-none sm:w-auto">
           <a className="transition-colors hover:text-foreground" href="#work">Work</a><a className="transition-colors hover:text-foreground" href="#stack">Stack</a><a className="transition-colors hover:text-foreground" href="#contact">Contact</a>
         </nav>
-        <div className="flex items-center gap-2"><ThemeToggle /><Button nativeButton={false} render={<a aria-label="Download Victor's resume" download href="victor-chandra-ios-resume.pdf" />} size="sm">Download Resume <Download /></Button></div>
+        <div className="ml-auto flex items-center gap-2"><ThemeToggle /><Button nativeButton={false} render={<a aria-label="Download Victor's resume" download href="victor-chandra-ios-resume.pdf" />} size="sm">Download Resume <Download /></Button></div>
       </header>
 
       <section className="mx-auto grid max-w-6xl gap-12 px-6 pb-28 pt-16 lg:grid-cols-[1.4fr_0.6fr] lg:px-8 lg:pb-40 lg:pt-28" id="top">
@@ -92,7 +93,7 @@ export default function Home() {
       </section>
 
       <section className="bg-primary text-primary-foreground" id="contact"><div className="mx-auto flex max-w-6xl flex-col justify-between gap-12 px-6 py-20 lg:flex-row lg:items-end lg:px-8 lg:py-28"><div><p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground/60">Get in touch</p><h2 className="mt-3 max-w-2xl text-balance text-4xl font-semibold tracking-[-0.05em] sm:text-6xl">Let&apos;s make the next interaction feel effortless.</h2></div><Button className="w-fit bg-background text-foreground hover:bg-background/85" nativeButton={false} render={<a aria-label="Email Victor at vichndrlie@outlook.com" href="mailto:vichndrlie@outlook.com" />} size="lg"><Mail /> vichndrlie@outlook.com</Button></div></section>
-      <footer className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-7 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between lg:px-8"><span>© {new Date().getFullYear()} Victor Chandra</span><div className="flex gap-5"><a href="https://github.com/mzmznasipadang" rel="noreferrer" target="_blank">GitHub</a><a href="https://linkedin.com/in/mzmznasipadang" rel="noreferrer" target="_blank">LinkedIn</a></div></footer>
+      <footer className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-7 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between lg:px-8"><span>© {new Date().getFullYear()} Victor Chandra</span><div className="flex flex-wrap gap-x-5 gap-y-2"><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><a href="https://github.com/mzmznasipadang" rel="noreferrer" target="_blank">GitHub</a><a href="https://linkedin.com/in/mzmznasipadang" rel="noreferrer" target="_blank">LinkedIn</a></div></footer>
     </main>
   );
 }

@@ -40,3 +40,8 @@ assert.ok(!legalPage.includes('href="/"'), 'Legal-page home link must preserve t
 assert.ok(legalPage.includes("import { Button } from '@/components/ui/button';"), 'Legal-page home link must use Button');
 assert.ok(legalPage.includes("import Link from 'next/link';"), 'Legal-page home link must use Next Link');
 assert.ok(legalPage.includes('aria-label="Back to portfolio"'), 'Legal-page home link must have an accessible label');
+
+const consent = readFileSync(new URL('../components/cookie-consent.tsx', import.meta.url), 'utf8');
+assert.ok(consent.includes("localStorage.getItem('cookie-consent')"));
+assert.ok(consent.includes("localStorage.setItem('cookie-consent'"));
+assert.ok(page.includes('href="/privacy"'));
