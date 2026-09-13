@@ -1,8 +1,12 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
+import * as security from './check-security.mjs';
 
 assert.ok(existsSync(new URL('../scripts/check-security.mjs', import.meta.url)));
 assert.ok(readFileSync(new URL('../package.json', import.meta.url), 'utf8').includes('check:security'));
+assert.equal(security.hasSecretExposure?.(`API_${'KEY: redacted'}`), true);
+assert.equal(security.hasSecretExposure?.(`secret_${'token = "redacted"'}`), true);
+assert.equal(security.hasSecretExposure?.(`API_${'KEY: process.env.API_KEY'}`), false);
 
 const page = readFileSync(new URL('../app/page.tsx', import.meta.url), 'utf8');
 const layout = readFileSync(new URL('../app/layout.tsx', import.meta.url), 'utf8');
