@@ -44,4 +44,5 @@ assert.ok(legalPage.includes('aria-label="Back to portfolio"'), 'Legal-page home
 const consent = readFileSync(new URL('../components/cookie-consent.tsx', import.meta.url), 'utf8');
 assert.ok(consent.includes("localStorage.getItem('cookie-consent')"));
 assert.ok(consent.includes("localStorage.setItem('cookie-consent'"));
-assert.ok(page.includes('href="/privacy"'));
+assert.ok(consent.includes('href="privacy/"'));
+assert.ok(page.includes('href="privacy/"'));
