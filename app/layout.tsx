@@ -20,12 +20,16 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://mzmznasipadang.github.io/VicPortfolio'),
-  title: 'Victor Chandra — iOS Engineer',
+  title: { default: 'Victor Chandra — iOS Engineer', template: '%s | Victor Chandra' },
   description: 'iOS engineer and software developer building thoughtful mobile products.',
+  alternates: { canonical: '/' },
   icons: { icon: 'favicon.svg' },
   openGraph: {
     title: 'Victor Chandra — iOS Engineer',
     description: 'iOS engineer and software developer building thoughtful mobile products.',
+    url: '/',
+    siteName: 'Victor Chandra',
+    type: 'website',
     images: ['/og.png'],
   },
   twitter: {

@@ -1,0 +1,3 @@
+User-Agent: *
+Allow: /
+Sitemap: https://mzmznasipadang.github.io/VicPortfolio/sitemap.xml
