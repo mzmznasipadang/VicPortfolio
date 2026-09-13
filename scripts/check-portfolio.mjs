@@ -34,3 +34,9 @@ for (const route of ['../app/privacy/page.tsx', '../app/terms/page.tsx']) {
 }
 assert.ok(readFileSync(new URL('../app/privacy/page.tsx', import.meta.url), 'utf8').includes('Privacy Policy'));
 assert.ok(readFileSync(new URL('../app/terms/page.tsx', import.meta.url), 'utf8').includes('Terms and Conditions'));
+
+const legalPage = readFileSync(new URL('../components/legal-page.tsx', import.meta.url), 'utf8');
+assert.ok(!legalPage.includes('href="/"'), 'Legal-page home link must preserve the GitHub Pages project path');
+assert.ok(legalPage.includes("import { Button } from '@/components/ui/button';"), 'Legal-page home link must use Button');
+assert.ok(legalPage.includes("import Link from 'next/link';"), 'Legal-page home link must use Next Link');
+assert.ok(legalPage.includes('aria-label="Back to portfolio"'), 'Legal-page home link must have an accessible label');
