@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 
+assert.ok(existsSync(new URL('../scripts/check-security.mjs', import.meta.url)));
+assert.ok(readFileSync(new URL('../package.json', import.meta.url), 'utf8').includes('check:security'));
+
 const page = readFileSync(new URL('../app/page.tsx', import.meta.url), 'utf8');
 const layout = readFileSync(new URL('../app/layout.tsx', import.meta.url), 'utf8');
 
