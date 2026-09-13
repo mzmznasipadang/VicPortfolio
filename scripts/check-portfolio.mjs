@@ -28,3 +28,9 @@ assert.ok(page.includes("import { gsap } from 'gsap'"));
 assert.ok(page.includes("prefers-reduced-motion: no-preference"));
 assert.ok(page.includes('motion-hero'));
 assert.ok(page.includes('motion-project'));
+
+for (const route of ['../app/privacy/page.tsx', '../app/terms/page.tsx']) {
+  assert.ok(existsSync(new URL(route, import.meta.url)), `Missing route: ${route}`);
+}
+assert.ok(readFileSync(new URL('../app/privacy/page.tsx', import.meta.url), 'utf8').includes('Privacy Policy'));
+assert.ok(readFileSync(new URL('../app/terms/page.tsx', import.meta.url), 'utf8').includes('Terms and Conditions'));
