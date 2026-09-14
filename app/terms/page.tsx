@@ -2,9 +2,17 @@ import type { Metadata } from 'next';
 
 import { LegalPage } from '@/components/legal-page';
 
+const title = 'Terms and Conditions';
+const description = 'Terms for using Victor Chandra’s portfolio.';
+const url = 'https://mzmznasipadang.github.io/VicPortfolio/terms.html';
+const images = ['https://mzmznasipadang.github.io/VicPortfolio/og.png'];
+
 export const metadata: Metadata = {
-  title: 'Terms and Conditions',
-  description: 'Terms for using Victor Chandra’s portfolio.',
+  title,
+  description,
+  alternates: { canonical: url },
+  openGraph: { title, description, url, siteName: 'Victor Chandra', type: 'website', images },
+  twitter: { card: 'summary_large_image', title, description, images },
 };
 
 export default function TermsPage() {
@@ -17,6 +25,14 @@ export default function TermsPage() {
       <section>
         <h2 className="text-xl font-semibold text-foreground">External links</h2>
         <p className="mt-3">External links are provided for convenience. Their content, availability, and privacy practices are controlled by their respective providers.</p>
+      </section>
+      <section>
+        <h2 className="text-xl font-semibold text-foreground">Intellectual property</h2>
+        <p className="mt-3">Unless otherwise stated, the original content on this portfolio belongs to Victor Chandra. Project materials, trademarks, and third-party content belong to their respective owners. Viewing this site does not grant permission to reproduce or distribute those materials; obtain permission from the relevant owner where required.</p>
+      </section>
+      <section>
+        <h2 className="text-xl font-semibold text-foreground">No warranty</h2>
+        <p className="mt-3">This site is provided as is and as available, without warranties to the extent permitted by law. Its content may contain errors or become outdated, and uninterrupted availability is not guaranteed. These terms do not limit rights that cannot lawfully be excluded.</p>
       </section>
       <section>
         <h2 className="text-xl font-semibold text-foreground">Contact</h2>

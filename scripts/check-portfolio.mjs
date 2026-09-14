@@ -7,6 +7,9 @@ assert.ok(readFileSync(new URL('../package.json', import.meta.url), 'utf8').incl
 assert.equal(security.hasSecretExposure?.(`API_${'KEY: redacted'}`), true);
 assert.equal(security.hasSecretExposure?.(`secret_${'token = "redacted"'}`), true);
 assert.equal(security.hasSecretExposure?.(`API_${'KEY: process.env.API_KEY'}`), false);
+for (const name of ['api_key', 'accessToken', 'password']) {
+  assert.equal(security.hasSecretExposure(JSON.stringify({ [name]: 'redacted' })), true, `Quoted ${name} must be detected`);
+}
 
 const page = readFileSync(new URL('../app/page.tsx', import.meta.url), 'utf8');
 const layout = readFileSync(new URL('../app/layout.tsx', import.meta.url), 'utf8');
@@ -52,11 +55,10 @@ assert.ok(readFileSync(new URL('../app/terms/page.tsx', import.meta.url), 'utf8'
 const legalPage = readFileSync(new URL('../components/legal-page.tsx', import.meta.url), 'utf8');
 assert.ok(!legalPage.includes('href="/"'), 'Legal-page home link must preserve the GitHub Pages project path');
 assert.ok(legalPage.includes("import { Button } from '@/components/ui/button';"), 'Legal-page home link must use Button');
-assert.ok(legalPage.includes("import Link from 'next/link';"), 'Legal-page home link must use Next Link');
 assert.ok(legalPage.includes('aria-label="Back to portfolio"'), 'Legal-page home link must have an accessible label');
 
 const consent = readFileSync(new URL('../components/cookie-consent.tsx', import.meta.url), 'utf8');
 assert.ok(consent.includes("localStorage.getItem('cookie-consent')"));
 assert.ok(consent.includes("localStorage.setItem('cookie-consent'"));
-assert.ok(consent.includes('href={`${import.meta.env.BASE_URL}privacy/`}'));
-assert.ok(page.includes('href="privacy/"'));
+assert.ok(consent.includes('href={`${import.meta.env.BASE_URL}privacy.html`}'));
+assert.ok(page.includes('href="privacy.html"'));

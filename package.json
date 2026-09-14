@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "vinext dev",
-    "test": "node scripts/check-portfolio.mjs && npm run check:security",
+    "test": "node scripts/check-portfolio.mjs && node scripts/check-consent.mjs && npm run check:security",
     "check:security": "node scripts/check-security.mjs",
     "build": "vinext build",
     "start": "wrangler dev --config dist/server/wrangler.json",

@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const privateKey = /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/;
-const secretAssignment = /\b(?:(?:api|auth|access|secret|private)[_-]?(?:key|token)|pass(?:word|wd))\s*[:=]\s*(?:['"`](?!(?:process\.env|import\.meta\.env)\b)[^'"`]+['"`]|(?![/\s#;]|(?:process\.env|import\.meta\.env)\b)[^\s#;]+)/i;
+const secretAssignment = /\b(?:(?:api|auth|access|secret|private)[_-]?(?:key|token)|pass(?:word|wd))['"]?\s*[:=]\s*(?:['"`](?!(?:process\.env|import\.meta\.env)\b)[^'"`]+['"`]|(?![/\s#;]|(?:process\.env|import\.meta\.env)\b)[^\s#;]+)/i;
 
 export const hasSecretExposure = (source) => privateKey.test(source) || secretAssignment.test(source);
 
