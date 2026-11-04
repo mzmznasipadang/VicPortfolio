@@ -111,7 +111,7 @@ export function PillNav({ work = [] }: { work?: WorkGroup[] }) {
       aria-label="Primary"
       className="relative flex items-center rounded-full border border-border bg-background/70 p-1 shadow-sm backdrop-blur-md"
     >
-      <span aria-hidden className="absolute top-1 left-0 h-[calc(100%-0.5rem)] w-0 rounded-full bg-foreground/10" ref={pill} />
+      <span aria-hidden className="absolute top-1 left-0 h-[calc(100%-0.5rem)] w-0 rounded-full bg-ring/15" ref={pill} />
       {items.map(({ id, label, Icon }) => {
         const isWork = id === 'work' && work.length > 0;
         return (
@@ -119,7 +119,7 @@ export function PillNav({ work = [] }: { work?: WorkGroup[] }) {
             <a
               aria-current={active === id ? 'location' : undefined}
               aria-label={label}
-              className="relative z-10 flex h-11 min-w-11 items-center justify-center gap-2 rounded-full text-sm font-medium text-muted-foreground transition-colors hover:text-foreground aria-[current]:text-foreground lg:px-4"
+              className="relative z-10 flex h-11 min-w-11 items-center justify-center gap-2 rounded-full text-sm font-medium text-muted-foreground transition-colors hover:text-foreground aria-[current]:text-foreground dark:hover:text-ring dark:aria-[current]:text-ring lg:px-4"
               href={`#${id}`}
               onBlur={() => moveTo(active)}
               onFocus={() => moveTo(id)}
@@ -135,7 +135,7 @@ export function PillNav({ work = [] }: { work?: WorkGroup[] }) {
                 aria-controls="work-menu"
                 aria-expanded={menuOpen}
                 aria-label="Open project menu"
-                className="relative z-10 -ml-1 hidden h-11 w-6 items-center justify-center rounded-full text-muted-foreground hover:text-foreground md:flex"
+                className="relative z-10 -ml-1 hidden h-11 w-6 items-center justify-center rounded-full text-muted-foreground hover:text-foreground aria-expanded:text-foreground dark:hover:text-ring dark:aria-expanded:text-ring md:flex"
                 onBlur={(e) => closeIfFocusLeaves(e.relatedTarget)}
                 onClick={() => (menuOpen ? setMenuOpen(false) : openMenu())}
                 ref={toggle}

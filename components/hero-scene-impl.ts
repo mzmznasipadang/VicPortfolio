@@ -89,7 +89,7 @@ const quadVertex = /* glsl */ `
 
 /** Mounts the hero scene into `canvas`, sized to `host`. Returns a cleanup function. Throws if WebGL is unavailable. */
 export function mountHeroScene(canvas: HTMLCanvasElement, host: HTMLElement) {
-  const renderer = new WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: 'low-power' });
+  const renderer = new WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: 'low-power', preserveDrawingBuffer: true }) // keeps the stars in theme-switch snapshots;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.autoClear = false;
 
@@ -189,7 +189,9 @@ export function mountHeroScene(canvas: HTMLCanvasElement, host: HTMLElement) {
   }
 
   function updateRunning() {
-    const shouldRun = !reduceMotion && visible && !document.hidden;
+    // Hold the loop while a theme switch animates, so the reveal isn't competing with a full-screen redraw every frame.
+    const switching = document.documentElement.hasAttribute('data-theme-switch');
+    const shouldRun = !reduceMotion && visible && !document.hidden && !switching;
     if (shouldRun && !running) { running = true; frame = requestAnimationFrame(loop); }
     if (!shouldRun && running) { running = false; cancelAnimationFrame(frame); }
   }
@@ -210,8 +212,8 @@ export function mountHeroScene(canvas: HTMLCanvasElement, host: HTMLElement) {
   visibilityObserver.observe(host);
   document.addEventListener('visibilitychange', updateRunning);
   // When the loop is stopped (reduced motion), redraw the still frame on theme change.
-  const themeRender = new MutationObserver(() => { if (!running) render(); });
-  themeRender.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  const themeRender = new MutationObserver(() => { updateRunning(); if (!running) render(); });
+  themeRender.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'data-theme-switch'] });
 
   resize();
   updateRunning();

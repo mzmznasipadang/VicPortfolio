@@ -1,11 +1,12 @@
 'use client';
 /* oxlint-disable next/no-html-link-for-pages -- Static hosting serves HTML files without an RSC navigation endpoint. */
 
-import { ArrowDown, ArrowUpRight, Check, Code2, Copy, Download, Mail } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Check, Code2, Copy, Mail } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
+import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,6 +16,7 @@ import { HeroScene } from '@/components/hero-scene';
 import { MorphTitle } from '@/components/morph-title';
 import { Portrait } from '@/components/portrait';
 import { SelfHostedShot } from '@/components/self-hosted-shots';
+import { ResumeButton } from '@/components/resume-button';
 import { PillNav, type WorkGroup } from '@/components/pill-nav';
 import { type Branch, StackMindmap } from '@/components/stack-mindmap';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -40,6 +42,8 @@ const workMenu: WorkGroup[] = [
   ...['iOS', 'macOS', 'Web'].map((label) => ({ label, items: projects.filter((p) => p.platforms[0] === label).map((p) => ({ name: p.name, caption: p.stack, image: p.image, href: p.href })) })),
   { label: 'Self-hosted', items: selfHosted.map((item) => ({ name: item.name, caption: item.status, href: item.href ?? '#self-hosted' })) },
 ];
+// Header controls share one look with the nav items: same height, the blue hint on hover, press feedback.
+const headerItem = 'flex h-11 min-w-11 items-center justify-center gap-2 rounded-full text-sm font-medium text-muted-foreground transition-[color,background-color,scale] duration-200 hover:bg-ring/15 hover:text-foreground active:scale-[0.97] dark:hover:text-ring';
 const heroTitles = ['iOS Engineer', 'SwiftUI Developer', 'AI Software Engineer', 'Product Builder'];
 const experience: Role[] = [
   { org: 'Dotcross AI', period: 'Dec 2025 – Present', role: 'Junior AI Software Engineer', detail: 'Production Python and AWS services, LLM API integration, and monitoring that reduced per-case processing costs by 78%.' },
@@ -107,8 +111,11 @@ export default function Home() {
     <main ref={page}>
       <header className="fixed inset-x-0 top-4 z-50 flex items-center justify-center gap-2 px-4">
         <PillNav work={workMenu} />
-        <div className="rounded-full border border-border bg-background/70 p-1 backdrop-blur-md [&_button]:rounded-full"><ThemeToggle /></div>
-        <Button className="h-11 rounded-full bg-background/70 px-4 backdrop-blur-md" nativeButton={false} render={<a aria-label="Download Victor's resume (PDF)" download href="victor-chandra-ios-resume.pdf" />} variant="outline"><Download /><span className="max-sm:sr-only">Download Resume</span></Button>
+        {/* Same pill as the nav: one outline, one height, one hover fill across the bar. */}
+        <div className="rounded-full border border-border bg-background/70 p-1 shadow-sm backdrop-blur-md"><ThemeToggle className={headerItem} /></div>
+        <div className="rounded-full border border-border bg-background/70 p-1 shadow-sm backdrop-blur-md">
+          <ResumeButton className={cn(headerItem, 'px-3 sm:px-4')} />
+        </div>
       </header>
 
       <section className="relative isolate flex min-h-svh items-center overflow-hidden" id="top">
