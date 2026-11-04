@@ -13,6 +13,7 @@ import { Separator } from '@/components/ui/separator';
 import { FilterTabs } from '@/components/filter-tabs';
 import { HeroScene } from '@/components/hero-scene';
 import { MorphTitle } from '@/components/morph-title';
+import { Portrait } from '@/components/portrait';
 import { PillNav, type WorkGroup } from '@/components/pill-nav';
 import { ThemeToggle } from '@/components/theme-toggle';
 
@@ -89,7 +90,7 @@ export default function Home() {
               <Button className="rounded-full bg-background/60 backdrop-blur" nativeButton={false} render={<a aria-label="Visit Victor's GitHub profile" href="https://github.com/mzmznasipadang" rel="noreferrer" target="_blank" />} size="lg" variant="outline"><Code2 /> GitHub</Button>
             </div>
           </div>
-          <Image alt="Victor Chandra" className="motion-aside size-44 justify-self-center rounded-full border-4 border-background object-cover shadow-2xl ring-1 ring-border lg:size-64" height={512} src="https://avatars.githubusercontent.com/u/41635105?v=4" unoptimized width={512} />
+          <Portrait className="motion-aside w-52 justify-self-center sm:w-60 lg:w-72" />
           <aside className="motion-aside lg:max-w-sm lg:justify-self-end">
             <p className="font-medium tracking-tight">Hi, I&apos;m Victor</p>
             <p className="mt-3 text-base leading-7 text-black dark:text-white">An iOS engineer trained at Apple Developer Academy. I&apos;ve shipped six Swift and SwiftUI apps, and built delivery automation that cut manual release overhead by 35%.</p>
