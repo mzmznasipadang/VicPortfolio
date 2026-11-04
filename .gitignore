@@ -37,3 +37,10 @@ next-env.d.ts
 /outputs/
 /work/
 *.tsbuildinfo
+
+# local agent and design-tool state
+/.claude/
+/.codex/
+/.cursor/
+/.gemini/
+/.impeccable/
