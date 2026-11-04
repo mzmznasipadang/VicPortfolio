@@ -4,8 +4,8 @@ import { LegalPage } from '@/components/legal-page';
 
 const title = 'Terms and Conditions';
 const description = 'Terms for using Victor Chandra’s portfolio.';
-const url = 'https://mzmznasipadang.github.io/VicPortfolio/terms.html';
-const images = ['https://mzmznasipadang.github.io/VicPortfolio/og.png'];
+const url = 'https://victorch.dev/terms.html';
+const images = ['https://victorch.dev/og.png'];
 
 export const metadata: Metadata = {
   title,

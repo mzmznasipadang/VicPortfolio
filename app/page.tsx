@@ -1,5 +1,5 @@
 'use client';
-/* oxlint-disable next/no-html-link-for-pages -- GitHub Pages serves static HTML files without an RSC navigation endpoint. */
+/* oxlint-disable next/no-html-link-for-pages -- Static hosting serves HTML files without an RSC navigation endpoint. */
 
 import { ArrowDown, ArrowUpRight, Code2, Download, Mail } from 'lucide-react';
 import Image from 'next/image';

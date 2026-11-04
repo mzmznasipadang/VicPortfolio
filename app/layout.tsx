@@ -19,7 +19,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://mzmznasipadang.github.io/VicPortfolio'),
+  metadataBase: new URL('https://victorch.dev'),
   title: { default: 'Victor Chandra — iOS Engineer', template: '%s | Victor Chandra' },
   description: 'iOS engineer and software developer building thoughtful mobile products.',
   alternates: { canonical: '/' },

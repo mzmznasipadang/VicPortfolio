@@ -7,7 +7,7 @@ import ts from 'typescript';
 // Run the real component with only React's browser hooks and storage substituted.
 const require = createRequire(import.meta.url);
 const source = readFileSync(new URL('../components/cookie-consent.tsx', import.meta.url), 'utf8');
-const compiled = ts.transpileModule(source.replaceAll('import.meta.env.BASE_URL', "'/VicPortfolio/'"), {
+const compiled = ts.transpileModule(source.replaceAll('import.meta.env.BASE_URL', "'/'"), {
   compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.CommonJS },
 }).outputText;
 

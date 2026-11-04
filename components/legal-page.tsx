@@ -1,4 +1,4 @@
-/* oxlint-disable next/no-html-link-for-pages -- GitHub Pages serves static HTML files without an RSC navigation endpoint. */
+/* oxlint-disable next/no-html-link-for-pages -- Static hosting serves HTML files without an RSC navigation endpoint. */
 import type { ReactNode } from 'react';
 
 import { Button } from '@/components/ui/button';

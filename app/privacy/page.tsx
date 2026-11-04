@@ -4,8 +4,8 @@ import { LegalPage } from '@/components/legal-page';
 
 const title = 'Privacy Policy';
 const description = 'How Victor Chandra’s portfolio handles visitor preferences and links.';
-const url = 'https://mzmznasipadang.github.io/VicPortfolio/privacy.html';
-const images = ['https://mzmznasipadang.github.io/VicPortfolio/og.png'];
+const url = 'https://victorch.dev/privacy.html';
+const images = ['https://victorch.dev/og.png'];
 
 export const metadata: Metadata = {
   title,
@@ -17,14 +17,14 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalPage title="Privacy Policy" updated="September 13, 2026">
+    <LegalPage title="Privacy Policy" updated="November 4, 2026">
       <section>
         <h2 className="text-xl font-semibold text-foreground">Overview</h2>
         <p className="mt-3">This portfolio does not collect personal data.</p>
       </section>
       <section>
         <h2 className="text-xl font-semibold text-foreground">Site delivery</h2>
-        <p className="mt-3">The site is delivered through GitHub Pages. GitHub may process request information under its own privacy policy when serving the site.</p>
+        <p className="mt-3">The site is served from a server run by Victor Chandra. The web server does not keep access logs. The profile photo is loaded from GitHub, which may process request information under its own privacy policy.</p>
       </section>
       <section>
         <h2 className="text-xl font-semibold text-foreground">Local preferences</h2>
