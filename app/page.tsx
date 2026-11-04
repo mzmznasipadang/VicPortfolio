@@ -14,6 +14,7 @@ import { FilterTabs } from '@/components/filter-tabs';
 import { HeroScene } from '@/components/hero-scene';
 import { MorphTitle } from '@/components/morph-title';
 import { Portrait } from '@/components/portrait';
+import { SelfHostedShot } from '@/components/self-hosted-shots';
 import { PillNav, type WorkGroup } from '@/components/pill-nav';
 import { type Branch, StackMindmap } from '@/components/stack-mindmap';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -144,10 +145,13 @@ export default function Home() {
             <h3 className="text-2xl font-semibold tracking-[-0.03em]">Also running on my own server</h3>
             <p className="mt-2 max-w-xl text-base leading-7 text-muted-foreground">Self-hosted services I build, deploy and keep running myself.</p>
             <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {selfHosted.map((item) => <li className="flex flex-col gap-3 rounded-2xl border border-border bg-background p-5" key={item.name}>
+              {selfHosted.map((item) => <li className="flex flex-col overflow-hidden rounded-2xl border border-border bg-background" key={item.name}>
+                <SelfHostedShot name={item.name} />
+                <div className="flex flex-1 flex-col gap-3 p-5">
                 <div className="flex items-center justify-between gap-3"><span className="text-lg font-semibold tracking-tight">{item.name}</span><Badge variant={item.status === 'Live' ? 'secondary' : 'outline'}>{item.status}</Badge></div>
                 <p className="text-sm leading-6 text-muted-foreground">{item.detail}</p>
                 {item.href && <a className="mt-auto inline-flex min-h-11 items-center gap-1 text-sm font-medium text-primary" href={item.href} rel="noreferrer" target="_blank">Visit site <ArrowUpRight className="size-3.5" /></a>}
+                </div>
               </li>)}
             </ul>
           </div>
@@ -176,7 +180,7 @@ export default function Home() {
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 lg:grid-cols-[1fr_auto] lg:px-8 lg:py-28">
           <div>
             <h2 className="max-w-2xl text-balance text-4xl font-semibold tracking-[-0.04em] sm:text-6xl">Let&apos;s make the next interaction feel effortless.</h2>
-            <p className="mt-6 text-base text-primary-foreground/80 dark:text-muted-foreground">Based in Tangerang Selatan, Indonesia · GMT+7</p>
+            <p className="mt-6 text-base text-primary-foreground/80 dark:text-muted-foreground">Based in Tangerang Selatan, Indonesia · GMT+7 · English, Indonesian and Mandarin (HSK 5)</p>
             <div className="mt-10 flex flex-wrap items-center gap-3">
               <Button className="h-14 rounded-full bg-background px-7 text-base text-foreground hover:bg-background/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90" nativeButton={false} render={<a aria-label="Email Victor at hello@victorch.dev" href="mailto:hello@victorch.dev" />}><Mail /> hello@victorch.dev</Button>
               <Button className="h-14 rounded-full border-primary-foreground/40 bg-transparent px-5 text-base text-primary-foreground hover:bg-primary-foreground/10 dark:border-border dark:text-foreground dark:hover:bg-muted" onClick={copyEmail} variant="outline">{copied ? <Check /> : <Copy />}{copied ? 'Copied' : 'Copy address'}</Button>

@@ -23,6 +23,7 @@
     "typeCheck": true
   },
   "ignorePatterns": [
+    "components/stageshow/kit/**",
     ".next/**",
     ".vinext/**",
     "out/**",
