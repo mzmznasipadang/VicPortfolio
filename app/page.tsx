@@ -29,7 +29,7 @@ const projects = [
 
 const projectFilters = ['All', 'iOS', 'macOS', 'Web'];
 const selfHosted = [
-  { name: 'Portfolio', detail: 'This site: a static export served by Caddy in Docker on my own server.', status: 'Live', href: 'https://victorch.dev' },
+  { name: 'Portfolio', detail: 'This site, built by me and hosted on my own server.', status: 'Live', href: 'https://victorch.dev' },
   { name: 'Gitea', detail: 'Private Git hosting for my projects, including this portfolio.', status: 'Live' },
   { name: 'Project + Invoice SaaS', detail: 'Project tracking and invoicing in one app.', status: 'Live' },
   { name: 'WeliJayaJaya', detail: 'Currently in development.', status: 'Ongoing' },
@@ -42,8 +42,8 @@ const workMenu: WorkGroup[] = [
 ];
 const heroTitles = ['iOS Engineer', 'SwiftUI Developer', 'AI Software Engineer', 'Product Builder'];
 const experience: Role[] = [
-  { org: 'Dotcross AI', period: 'Present', role: 'Junior AI Software Engineer', detail: 'Production Python and AWS services, LLM API integration, and monitoring that reduced per-case processing costs by 78%.' },
-  { org: 'Apple Developer Academy', period: '2025', role: 'iOS Developer', detail: 'Selected from 10,000+ applicants; shipped six apps, worked in two-week release cycles, and progressed to leading 4-person teams.' },
+  { org: 'Dotcross AI', period: 'Dec 2025 – Present', role: 'Junior AI Software Engineer', detail: 'Production Python and AWS services, LLM API integration, and monitoring that reduced per-case processing costs by 78%.' },
+  { org: 'Apple Developer Academy', period: 'Mar – Dec 2025', role: 'iOS Developer', detail: 'Selected from 10,000+ applicants; shipped six apps, worked in two-week release cycles, and progressed to leading 4-person teams.' },
   { org: 'Sycomora Welfare Center', period: '2021–2022', role: 'Technical Lead & UI Designer', detail: 'Directed a 5-person team launching the company website and mobile app in two-month delivery cycles.' },
 ];
 const skillBranches: Branch[] = [
@@ -61,7 +61,8 @@ const skillUsedIn: Record<string, string[]> = {
   MVVM: ['Coco'],
   TestFlight: ['Reflax', 'Apple Developer Academy'],
   'Xcode Cloud': ['Apple Developer Academy'],
-  Docker: ['Portfolio (self-hosted)'],
+  Docker: ['Self-hosted homelab', 'Portfolio (self-hosted)'],
+  Jenkins: ['Self-hosted homelab'],
   Python: ['Dotcross AI'],
   'AWS Lambda': ['Dotcross AI'],
   'REST APIs': ['Dotcross AI'],
@@ -143,7 +144,7 @@ export default function Home() {
 
           <div className="mt-20 border-t border-border pt-12" id="self-hosted">
             <h3 className="text-2xl font-semibold tracking-[-0.03em]">Also running on my own server</h3>
-            <p className="mt-2 max-w-xl text-base leading-7 text-muted-foreground">Self-hosted services I build, deploy and keep running myself.</p>
+            <p className="mt-2 max-w-xl text-base leading-7 text-muted-foreground">A multi-node Raspberry Pi homelab I run as personal production infrastructure, with containerised services, self-hosted Jenkins CI/CD and a Tailscale mesh for secure remote access.</p>
             <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {selfHosted.map((item) => <li className="flex flex-col overflow-hidden rounded-2xl border border-border bg-background" key={item.name}>
                 <SelfHostedShot name={item.name} />
@@ -162,7 +163,7 @@ export default function Home() {
         <h2 className="text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">Mobile craft with production depth.</h2>
         <div className="mt-10 flex flex-wrap items-center gap-x-10 gap-y-4 border-y border-border py-6">
           <p className="text-sm text-muted-foreground">Built and learned at</p>
-          {['Dotcross AI', 'Apple Developer Academy', 'Sycomora', 'BINUS University'].map((name) => <span className="text-lg font-semibold tracking-[-0.03em] text-foreground/70" key={name}>{name}</span>)}
+          {['Dotcross AI', 'Apple Developer Academy', 'Sycomora'].map((name) => <span className="text-lg font-semibold tracking-[-0.03em] text-foreground/70" key={name}>{name}</span>)}
         </div>
         <ExperienceTimeline roles={experience} />
       </section>
