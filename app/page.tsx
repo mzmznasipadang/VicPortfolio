@@ -10,6 +10,9 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { HeroScene } from '@/components/hero-scene';
+import { MorphTitle } from '@/components/morph-title';
+import { PillNav } from '@/components/pill-nav';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 const projects = [
@@ -20,6 +23,7 @@ const projects = [
   { name: 'AshMap', detail: 'A live Indonesian volcanic ash advisory map that plots real Darwin VAAC ash polygons, wind vectors, forecast drift, airport impacts, and GIS-ready data.', stack: 'Web · GIS', href: 'https://github.com/mzmznasipadang/ash-map', image: 'projects/ashmap.png' },
 ];
 
+const heroTitles = ['iOS Engineer', 'SwiftUI Developer', 'AI Software Engineer', 'Product Builder'];
 const mobileStack = ['Swift', 'SwiftUI', 'UIKit', 'HealthKit', 'MVVM', 'Xcode Cloud', 'TestFlight'];
 const engineeringStack = ['Python', 'AWS Lambda', 'REST APIs', 'PostgreSQL', 'Supabase', 'GitHub Actions', 'Jenkins', 'Docker'];
 
@@ -40,28 +44,30 @@ export default function Home() {
 
   return (
     <main ref={page}>
-      <header className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-6 py-6 lg:px-8">
-        <a className="text-sm font-semibold tracking-tight" href="#top">VC<span className="text-primary">.</span></a>
-        <nav aria-label="Primary" className="order-3 flex w-full flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground sm:order-none sm:w-auto">
-          <a className="transition-colors hover:text-foreground" href="#work">Work</a><a className="transition-colors hover:text-foreground" href="#stack">Stack</a><a className="transition-colors hover:text-foreground" href="#contact">Contact</a>
-        </nav>
-        <div className="ml-auto flex items-center gap-2"><ThemeToggle /><Button nativeButton={false} render={<a aria-label="Download Victor's resume" download href="victor-chandra-ios-resume.pdf" />} size="sm">Download Resume <Download /></Button></div>
+      <header className="fixed inset-x-0 top-4 z-50 flex items-center justify-center gap-2 px-4">
+        <PillNav />
+        <div className="rounded-full border border-border bg-background/70 p-1 backdrop-blur-md [&_button]:rounded-full"><ThemeToggle /></div>
+        <Button className="h-11 rounded-full px-4" nativeButton={false} render={<a aria-label="Download Victor's resume" download href="victor-chandra-ios-resume.pdf" />}><Download /><span className="max-sm:sr-only">Download Resume</span></Button>
       </header>
 
-      <section className="mx-auto grid max-w-6xl gap-12 px-6 pb-28 pt-16 lg:grid-cols-[1.4fr_0.6fr] lg:px-8 lg:pb-40 lg:pt-28" id="top">
-        <div className="motion-hero max-w-3xl">
-          <p className="mb-6 text-xs font-semibold uppercase tracking-[0.18em] text-primary">iOS Engineer · Indonesia</p>
-          <h1 className="text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.055em] text-black dark:text-white sm:text-7xl">Thoughtful mobile products, built with care.</h1>
-          <p className="mt-8 max-w-xl text-lg leading-8 text-black dark:text-white">I&apos;m Victor Chandra, an iOS engineer trained at Apple Developer Academy. I&apos;ve shipped six Swift and SwiftUI apps, and built delivery automation that cut manual release overhead by 35%.</p>
-          <div className="mt-10 flex flex-wrap gap-3">
-            <Button nativeButton={false} render={<a aria-label="Jump to selected work" href="#work" />} size="lg">Selected work <ArrowDown /></Button>
-            <Button nativeButton={false} render={<a aria-label="Visit Victor's GitHub profile" href="https://github.com/mzmznasipadang" rel="noreferrer" target="_blank" />} size="lg" variant="outline"><Code2 /> GitHub</Button>
+      <section className="relative isolate flex min-h-svh items-center overflow-hidden" id="top">
+        <HeroScene />
+        <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 px-6 pb-[30svh] pt-28 lg:grid-cols-[1fr_auto_1fr] lg:gap-12 lg:px-8 lg:pb-[24svh]">
+          <div className="motion-hero">
+            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.18em] text-primary">Victor Chandra · Indonesia</p>
+            <h1 className="text-balance text-5xl font-semibold leading-[1.02] tracking-[-0.05em] sm:text-6xl"><span className="sr-only">Victor Chandra, iOS Engineer</span><MorphTitle words={heroTitles} /></h1>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Button className="rounded-full" nativeButton={false} render={<a aria-label="Jump to selected work" href="#work" />} size="lg">Selected work <ArrowDown /></Button>
+              <Button className="rounded-full bg-background/60 backdrop-blur" nativeButton={false} render={<a aria-label="Visit Victor's GitHub profile" href="https://github.com/mzmznasipadang" rel="noreferrer" target="_blank" />} size="lg" variant="outline"><Code2 /> GitHub</Button>
+            </div>
           </div>
+          <Image alt="Victor Chandra" className="motion-aside size-44 justify-self-center rounded-full border-4 border-background object-cover shadow-2xl ring-1 ring-border lg:size-64" height={512} src="https://avatars.githubusercontent.com/u/41635105?v=4" unoptimized width={512} />
+          <aside className="motion-aside lg:max-w-sm lg:justify-self-end">
+            <p className="font-medium tracking-tight">Hi, I&apos;m Victor</p>
+            <p className="mt-3 text-base leading-7 text-black dark:text-white">An iOS engineer trained at Apple Developer Academy. I&apos;ve shipped six Swift and SwiftUI apps, and built delivery automation that cut manual release overhead by 35%.</p>
+            <p className="mt-5 text-sm leading-6 text-muted-foreground">Tangerang Selatan, Indonesia<br />Dotcross AI</p>
+          </aside>
         </div>
-        <aside className="motion-aside self-end border-l border-border pl-6 lg:pl-8">
-          <Image alt="Victor Chandra" className="mb-5 size-20 rounded-full border border-border object-cover" height={160} src="https://avatars.githubusercontent.com/u/41635105?v=4" unoptimized width={160} />
-          <p className="font-medium tracking-tight">Victor Chandra</p><p className="mt-1 text-sm leading-6 text-muted-foreground">Tangerang Selatan, Indonesia<br />Dotcross AI</p>
-        </aside>
       </section>
 
       <section className="border-y border-border bg-card" id="work">
