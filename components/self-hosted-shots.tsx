@@ -9,7 +9,7 @@ import './self-hosted-shots.css';
 // one window inset 20px on top and sides, running off the card's bottom.
 // Real words only on what identifies each product; bars for the rest.
 
-function useSiteTheme() {
+export function useSiteTheme() {
   const [dark, setDark] = useState(false);
   useEffect(() => {
     const root = document.documentElement;
@@ -22,11 +22,12 @@ function useSiteTheme() {
   return dark;
 }
 
-function Shot({ children }: { children: ReactNode }) {
+/** A still stage in the site's theme; `className` scopes each set's CSS. */
+export function Shot({ children, height = 190, className = 'shs' }: { children: ReactNode; height?: number; className?: string }) {
   const dark = useSiteTheme();
   return (
-    <div aria-hidden className="shs">
-      <Stage accent={dark ? '#49bce9' : '#272660'} height={190} theme={dark ? 'dark' : 'light'} width={352}>
+    <div aria-hidden className={className}>
+      <Stage accent={dark ? '#49bce9' : '#272660'} height={height} theme={dark ? 'dark' : 'light'} width={352}>
         {() => children}
       </Stage>
     </div>

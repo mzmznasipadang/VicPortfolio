@@ -10,6 +10,7 @@
     "test": "node scripts/check-portfolio.mjs && node scripts/check-consent.mjs && npm run check:security",
     "check:security": "node scripts/check-security.mjs",
     "build": "vinext build",
+    "preview": "node scripts/preview.mjs",
     "start": "wrangler dev --config dist/server/wrangler.json",
     "lint": "oxlint",
     "format": "oxfmt"

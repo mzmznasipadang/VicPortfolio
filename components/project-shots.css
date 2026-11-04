@@ -1,0 +1,176 @@
+/* Scoped to the Selected work product shots. Stage is 352 × 220. */
+.pjs {
+  & .ss-stage {
+    overflow: hidden;
+    background: var(--ss-well);
+  }
+
+  /* Phones: pinned 20px from the top, running off the bottom */
+  .pjs-phone { position: absolute; top: 20px; }
+  .pjs-phone--right { right: 16px; }
+  .pjs-phone--left { left: 32px; }
+  .pjs-phone--small { left: 22px; top: 44px; }
+
+  /* Inside the phone everything is in iOS points (screen 402 wide) */
+  .pjs-screen {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 8px 24px 0;
+  }
+  .pjs-large { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; color: var(--ss-text-strong); }
+  .pjs-title { font-size: 26px; font-weight: 600; letter-spacing: -0.02em; color: var(--ss-text-strong); margin-bottom: -10px; }
+  .pjs-body { font-size: 22px; color: var(--ss-text-strong); }
+  .pjs-dim { color: var(--ss-text); }
+  .pjs-center { text-align: center; }
+
+  /* Reflax: last night's sleep and the day's timings it set */
+  .pjs-wake { display: flex; flex-direction: column; gap: 18px; padding: 22px 24px; border-radius: 28px; background: var(--ss-canvas); }
+  .pjs-wake__head { display: flex; align-items: baseline; justify-content: space-between; }
+  .pjs-wake .pjs-label { font-size: 20px; }
+  .pjs-figure { font-size: 38px; font-weight: 700; letter-spacing: -0.02em; color: var(--ss-text-strong); font-variant-numeric: tabular-nums; }
+  .pjs-wake__track { position: relative; height: 14px; border-radius: 99px; background: var(--ss-line); }
+  .pjs-wake__sleep { position: absolute; inset: 0 42% 0 0; border-radius: 99px; background: var(--ss-accent); }
+  .pjs-wake__now { position: absolute; top: -5px; left: 58%; width: 4px; height: 24px; border-radius: 2px; background: var(--ss-text-strong); }
+  .pjs-iosrow__lead { display: flex; align-items: center; gap: 14px; }
+  .pjs-iosrow .pjs-dot { width: 12px; height: 12px; }
+  .pjs-iosrow[data-next] .pjs-body:last-child { color: var(--ss-accent); font-weight: 600; }
+  .pjs-iosrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--ss-line);
+  }
+
+  /* Coco: search and an activity */
+  .pjs-search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 56px;
+    padding: 0 18px;
+    border-radius: 16px;
+    background: var(--ss-canvas);
+    color: var(--ss-text);
+  }
+  .pjs-photo { height: 190px; overflow: hidden; border-radius: 24px; background: var(--ss-accent-soft); }
+  .pjs-photo svg { width: 100%; height: 100%; display: block; }
+  .pjs-photo__sun { fill: var(--ss-accent-2, var(--ss-accent)); opacity: 0.6; }
+  .pjs-photo__far { fill: var(--ss-accent); opacity: 0.35; }
+  .pjs-photo__near { fill: var(--ss-accent); }
+
+  /* Satellite cards that straddle the phone's edge */
+  .pjs-sat {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px 10px 10px;
+    border-radius: 14px;
+    background: var(--ss-surface);
+    box-shadow: 0 0 0 1px var(--ss-line), var(--ss-shadow-satellite);
+  }
+  .pjs-sat__icon {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--ss-accent);
+    color: #fff;
+  }
+  .pjs-sat__icon[data-tone='success'] { background: var(--ss-success); }
+  .pjs-sat__copy { display: flex; flex-direction: column; gap: 5px; }
+  .pjs-sat__title { font-size: 12px; font-weight: 600; color: var(--ss-text-strong); }
+  .pjs-sat__meta { font-size: 11px; color: var(--ss-text); }
+
+  /* CountDown: a menu bar and the panel hanging from its item */
+  .pjs-desktop {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 90% at 85% 110%, var(--ss-accent-soft), transparent 60%), var(--ss-well);
+  }
+  .pjs-menubar {
+    position: absolute;
+    inset: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 26px;
+    padding: 0 12px;
+    background: color-mix(in srgb, var(--ss-surface) 80%, transparent);
+    border-bottom: 1px solid var(--ss-line);
+    color: var(--ss-text-strong);
+    font-size: 11px;
+  }
+  .pjs-menubar__item { display: flex; align-items: center; gap: 5px; margin-left: auto; padding: 2px 7px; border-radius: 5px; }
+  .pjs-menubar__item[data-on] { background: var(--ss-accent-soft); }
+  .pjs-menubar__time { font-variant-numeric: tabular-nums; }
+  .pjs-panel {
+    position: absolute;
+    top: 32px;
+    left: 96px;
+    width: 216px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+    border-radius: 12px;
+    background: var(--ss-surface);
+    box-shadow: 0 0 0 1px var(--ss-line), var(--ss-shadow-hero);
+  }
+  .pjs-panel__head { display: flex; align-items: center; justify-content: space-between; }
+  .pjs-panel__actions { display: flex; gap: 6px; }
+  .pjs-count { font-size: 30px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; color: var(--ss-text-strong); font-variant-numeric: tabular-nums; }
+  .pjs-event { display: flex; align-items: center; gap: 8px; }
+  .pjs-event .pjs-meta, .pjs-event .pjs-dot:last-child { margin-left: auto; }
+  .pjs-dot { width: 7px; height: 7px; flex: none; border-radius: 50%; background: var(--ss-accent); }
+  .pjs-dot[data-tone='2'] { background: var(--ss-ink-3); }
+  .pjs-dot[data-tone='danger'] { background: var(--ss-danger); }
+
+  .pjs-h { font-size: 13px; font-weight: 600; color: var(--ss-text-strong); }
+  .pjs-label { font-size: 11px; color: var(--ss-text); }
+  .pjs-meta { font-size: 11px; color: var(--ss-text); font-variant-numeric: tabular-nums; }
+  .pjs-rowtext { font-size: 12px; font-weight: 500; color: var(--ss-text-strong); font-variant-numeric: tabular-nums; }
+
+  /* ADASayembara: admin queue with the attendee's phone over its margin */
+  .pjs-admin {
+    position: absolute;
+    top: 20px;
+    left: 92px;
+    width: 240px;
+    height: 230px;
+    box-shadow: var(--ss-shadow-hero);
+  }
+  .pjs-admin__body { display: flex; flex-direction: column; gap: 6px; height: 100%; padding: 14px 14px 0 54px; background: var(--ss-surface); }
+  .pjs-serving { display: flex; align-items: center; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid var(--ss-line); }
+  .pjs-ticket { font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: var(--ss-text-strong); font-variant-numeric: tabular-nums; }
+  .pjs-queue { display: flex; flex-direction: column; }
+  .pjs-queue__row { display: flex; align-items: center; justify-content: space-between; height: 28px; border-bottom: 1px solid var(--ss-line-faint, var(--ss-line)); }
+  .pjs-phone--small .pjs-screen { align-items: center; gap: 18px; padding-top: 40px; }
+  .pjs-phone--small .pjs-label { font-size: 24px; }
+  .pjs-big { font-size: 72px; font-weight: 700; letter-spacing: -0.03em; color: var(--ss-accent); font-variant-numeric: tabular-nums; }
+  .pjs-phone--small .pjs-body { font-size: 24px; }
+  .pjs-qr { width: 170px; height: 170px; margin-top: 16px; fill: var(--ss-text-strong); }
+
+  /* AshMap: advisory sidebar and the ash polygon on the map */
+  .pjs-map {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 312px;
+    height: 230px;
+    box-shadow: var(--ss-shadow-hero);
+  }
+  .pjs-side { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 0 12px; }
+  .pjs-side .ss-divider { align-self: stretch; }
+  .pjs-side .pjs-event { align-self: stretch; }
+  .pjs-geo { width: 100%; height: 100%; display: block; background: color-mix(in srgb, #49bce9 16%, var(--ss-surface)); }
+  .pjs-geo__land { fill: color-mix(in srgb, var(--ss-text) 12%, var(--ss-surface)); stroke: var(--ss-line); stroke-width: 0.75; }
+  .pjs-geo__ash { fill: color-mix(in srgb, var(--ss-accent) 22%, transparent); stroke: var(--ss-accent); stroke-width: 1.25; stroke-linejoin: round; }
+  .pjs-geo__wind { stroke: var(--ss-ink-3); stroke-width: 1.25; stroke-linecap: round; }
+  .pjs-geo__volcano { fill: var(--ss-warning); }
+  .pjs-geo__pin rect { fill: var(--ss-danger); }
+  .pjs-geo__pin text { fill: #fff; font-size: 6.5px; font-weight: 600; font-family: var(--ss-font); }
+}

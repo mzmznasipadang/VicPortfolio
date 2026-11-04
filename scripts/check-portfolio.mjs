@@ -30,13 +30,14 @@ for (const text of ['counts down to upcoming calendar events in real time', 'liv
   assert.ok(page.includes(text), `Missing project detail: ${text}`);
 }
 
-for (const image of ['reflax.png', 'coco.png', 'countdown.png', 'adasayembara.png', 'ashmap.png']) {
+for (const image of ['reflax.webp', 'coco.webp', 'countdown.webp', 'adasayembara.webp', 'ashmap.webp']) {
   assert.ok(page.includes(`projects/${image}`), `Missing image reference: ${image}`);
   assert.ok(existsSync(new URL(`../public/projects/${image}`, import.meta.url)), `Missing image asset: ${image}`);
 }
 
 assert.ok(!page.includes('Binus Xplore'), 'Binus Xplore should be removed');
-assert.ok(!page.includes('naspadstudio.id'), 'Studio link should be removed');
+// Self-hosted apps live on naspadstudio.id subdomains; only the studio homepage link stays removed.
+assert.ok(!/https:\/\/(www\.)?naspadstudio\.id/.test(page), 'Studio link should be removed');
 assert.ok(!page.includes('dribbble.com'), 'Dribbble link should be removed');
 assert.ok(page.includes('Tangerang Selatan, Indonesia<br />Dotcross AI'));
 

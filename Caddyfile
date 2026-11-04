@@ -2,6 +2,20 @@ victorch.dev {
 	root * /srv
 	encode zstd gzip
 	header /_next/static/* Cache-Control "public, max-age=31536000, immutable"
+	# Uptime Kuma's status page API, proxied same-origin for the About homelab tile (Kuma sends no CORS headers).
+	# Only these two read-only endpoints are exposed.
+	handle /uptime/monitors {
+		rewrite * /api/status-page/naspadstudio
+		reverse_proxy https://uptime.naspadstudio.id {
+			header_up Host {upstream_hostport}
+		}
+	}
+	handle /uptime/heartbeat {
+		rewrite * /api/status-page/heartbeat/naspadstudio
+		reverse_proxy https://uptime.naspadstudio.id {
+			header_up Host {upstream_hostport}
+		}
+	}
 	file_server
 	handle_errors {
 		rewrite * /404.html

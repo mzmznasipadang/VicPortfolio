@@ -123,8 +123,9 @@ export function PillNav({ work = [] }: { work?: WorkGroup[] }) {
               href={`#${id}`}
               onBlur={() => moveTo(active)}
               onFocus={() => moveTo(id)}
-              onMouseEnter={() => { moveTo(id); if (isWork) openMenuSoon(); }}
-              onMouseLeave={() => { moveTo(active); if (isWork) closeMenuSoon(); }}
+              // Mouse only: on touch, iOS treats a hover-driven change as the first tap and swallows the click.
+              onPointerEnter={(e) => { if (e.pointerType !== 'mouse') return; moveTo(id); if (isWork) openMenuSoon(); }}
+              onPointerLeave={(e) => { if (e.pointerType !== 'mouse') return; moveTo(active); if (isWork) closeMenuSoon(); }}
               ref={(el) => { links.current[id] = el; }}
             >
               <Icon className="size-4" />

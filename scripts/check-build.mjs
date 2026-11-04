@@ -5,8 +5,9 @@ const index = new URL('../dist/client/index.html', import.meta.url);
 assert.ok(existsSync(index), 'Static export is missing index.html');
 
 const page = readFileSync(index, 'utf8');
-for (const image of ['reflax.png', 'coco.png', 'countdown.png', 'adasayembara.png', 'ashmap.png']) {
-  assert.ok(page.includes(`src="projects/${image}"`), `Static export has an invalid image path: ${image}`);
+for (const image of ['reflax.webp', 'coco.webp', 'countdown.webp', 'adasayembara.webp', 'ashmap.webp']) {
+  // The cards draw stageshow shots now; the thumbnails are only loaded by the Work menu, so check they ship.
+  assert.ok(existsSync(new URL(`../dist/client/projects/${image}`, import.meta.url)), `Static export is missing image: ${image}`);
 }
 
 assert.ok(page.includes('href="favicon.svg"'), 'Static export has an invalid favicon path');

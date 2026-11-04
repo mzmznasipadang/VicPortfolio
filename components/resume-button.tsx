@@ -48,8 +48,8 @@ export function ResumeButton({ className }: { className?: string }) {
       href="victor-chandra-ios-resume.pdf"
       onBlur={settle}
       onFocus={play}
-      onMouseEnter={play}
-      onMouseLeave={settle}
+      onPointerEnter={(e) => { if (e.pointerType === 'mouse') play(); }}
+      onPointerLeave={(e) => { if (e.pointerType === 'mouse') settle(); }}
     >
       {/* Lucide's download glyph, split so the arrow and tray can move separately */}
       <svg aria-hidden className="size-4 shrink-0 overflow-visible" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">

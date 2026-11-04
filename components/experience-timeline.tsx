@@ -13,6 +13,18 @@ export function ExperienceTimeline({ roles }: { roles: Role[] }) {
   useEffect(() => {
     const el = list.current;
     if (!el) return;
+    // The rail stops at the centre of the last dot instead of running past the final role.
+    const fitRail = () => {
+      const dots = el.querySelectorAll<HTMLElement>('.timeline-dot');
+      const last = dots[dots.length - 1];
+      if (!last) return;
+      // Layout offsets, not rects: the entries are still translated by their scroll-in animation here.
+      const centre = (last.offsetParent as HTMLElement).offsetTop + last.offsetTop + last.offsetHeight / 2;
+      el.style.setProperty('--rail-end', `${el.offsetHeight - centre}px`);
+    };
+    fitRail();
+    const resize = new ResizeObserver(fitRail);
+    resize.observe(el);
     gsap.registerPlugin(ScrollTrigger);
     const media = gsap.matchMedia();
     media.add('(prefers-reduced-motion: no-preference)', () => {
@@ -21,16 +33,16 @@ export function ExperienceTimeline({ roles }: { roles: Role[] }) {
         gsap.from(item, { opacity: 0.35, y: 24, duration: 0.6, ease: 'power3.out', scrollTrigger: { trigger: item, start: 'top 85%' } });
       });
     }, el);
-    return () => media.revert();
+    return () => { resize.disconnect(); media.revert(); };
   }, []);
 
   return (
     <ol className="relative mt-12 space-y-12 pl-8 sm:pl-10" ref={list}>
-      <span aria-hidden className="absolute top-2 bottom-2 left-[7px] w-px bg-border sm:left-[11px]" />
-      <span aria-hidden className="timeline-progress absolute top-2 bottom-2 left-[7px] w-px origin-top bg-primary sm:left-[11px]" />
+      <span aria-hidden className="absolute top-2 mb-0 bottom-(--rail-end,0.5rem) left-[7px] w-px bg-border sm:left-[11px]" />
+      <span aria-hidden className="timeline-progress absolute top-2 mb-0 bottom-(--rail-end,0.5rem) left-[7px] w-px origin-top bg-primary sm:left-[11px]" />
       {roles.map((item) => (
         <li className="timeline-item relative grid gap-2 md:grid-cols-[12rem_1fr] md:gap-10" key={item.org}>
-          <span aria-hidden className="absolute top-1.5 -left-8 size-[15px] rounded-full border-2 border-primary bg-background sm:-left-10 sm:size-[23px] sm:border-[3px]" />
+          <span aria-hidden className="timeline-dot absolute top-1.5 -left-8 size-[15px] rounded-full border-2 border-primary bg-background sm:-left-10 sm:size-[23px] sm:border-[3px]" />
           <div>
             <p className="text-sm font-semibold text-primary">{item.period}</p>
             <p className="mt-1 text-sm text-muted-foreground">{item.org}</p>

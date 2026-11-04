@@ -1,20 +1,22 @@
 'use client';
 /* oxlint-disable next/no-html-link-for-pages -- Static hosting serves HTML files without an RSC navigation endpoint. */
 
-import { ArrowDown, ArrowUpRight, Check, Code2, Copy, Mail } from 'lucide-react';
-import Image from 'next/image';
+import { ArrowDown, ArrowUpRight, Code2, Mail } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
 import { cn } from '@/lib/utils';
+import { AboutBento } from '@/components/about-bento';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { ExperienceTimeline, type Role } from '@/components/experience-timeline';
 import { FilterTabs } from '@/components/filter-tabs';
+import { FlyLink } from '@/components/fly-link';
 import { HeroScene } from '@/components/hero-scene';
 import { MorphTitle } from '@/components/morph-title';
 import { Portrait } from '@/components/portrait';
+import { ProjectShot } from '@/components/project-shots';
 import { SelfHostedShot } from '@/components/self-hosted-shots';
 import { ResumeButton } from '@/components/resume-button';
 import { PillNav, type WorkGroup } from '@/components/pill-nav';
@@ -22,20 +24,20 @@ import { type Branch, StackMindmap } from '@/components/stack-mindmap';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 const projects = [
-  { name: 'Reflax', platforms: ['iOS'], detail: 'Health companion app using HealthKit, adaptive scheduling, accessibility support, and secure on-device health-data handling.', stack: 'SwiftUI · HealthKit', href: 'https://testflight.apple.com/join/J77sp3K5', image: 'projects/reflax.png' },
-  { name: 'Coco', platforms: ['iOS'], detail: 'A native iOS travel activity booking app with discovery, search, booking flows, and trip management.', stack: 'UIKit · MVVM', href: 'https://github.com/mzmznasipadang/LinCoCoCooo', image: 'projects/coco.png' },
-  { name: 'CountDown', platforms: ['macOS'], detail: 'A lightweight macOS menu bar app that counts down to upcoming calendar events in real time, with meeting links, snooze controls, and calendar-aware alerts.', stack: 'macOS · Swift', href: 'https://github.com/mzmznasipadang/CountDown', image: 'projects/countdown.png' },
-  { name: 'ADASayembara', platforms: ['iOS', 'Web'], detail: 'A real-time queue management system for the Shoot & Win event, with live queue status across attendees and admins, QR access, notifications, and protected admin controls.', stack: 'iOS · Web', href: 'https://github.com/mzmznasipadang/ADASayembara', image: 'projects/adasayembara.png' },
-  { name: 'AshMap', platforms: ['Web'], detail: 'A live Indonesian volcanic ash advisory map that plots real Darwin VAAC ash polygons, wind vectors, forecast drift, airport impacts, and GIS-ready data.', stack: 'Web · GIS', href: 'https://github.com/mzmznasipadang/ash-map', image: 'projects/ashmap.png' },
+  { name: 'Reflax', platforms: ['iOS'], detail: 'Health companion app using HealthKit, adaptive scheduling, accessibility support, and secure on-device health-data handling.', stack: 'SwiftUI · HealthKit', href: 'https://testflight.apple.com/join/J77sp3K5', image: 'projects/reflax.webp' },
+  { name: 'Coco', platforms: ['iOS'], detail: 'A native iOS travel activity booking app with discovery, search, booking flows, and trip management.', stack: 'UIKit · MVVM', href: 'https://github.com/mzmznasipadang/LinCoCoCooo', image: 'projects/coco.webp' },
+  { name: 'CountDown', platforms: ['macOS'], detail: 'A lightweight macOS menu bar app that counts down to upcoming calendar events in real time, with meeting links, snooze controls, and calendar-aware alerts.', stack: 'macOS · Swift', href: 'https://github.com/mzmznasipadang/CountDown', image: 'projects/countdown.webp' },
+  { name: 'ADASayembara', platforms: ['iOS', 'Web'], detail: 'A real-time queue management system for the Shoot & Win event, with live queue status across attendees and admins, QR access, notifications, and protected admin controls.', stack: 'iOS · Web', href: 'https://github.com/mzmznasipadang/ADASayembara', image: 'projects/adasayembara.webp' },
+  { name: 'AshMap', platforms: ['Web'], detail: 'A live Indonesian volcanic ash advisory map that plots real Darwin VAAC ash polygons, wind vectors, forecast drift, airport impacts, and GIS-ready data.', stack: 'Web · GIS', href: 'https://github.com/mzmznasipadang/ash-map', image: 'projects/ashmap.webp' },
 ];
 
 const projectFilters = ['All', 'iOS', 'macOS', 'Web'];
 const selfHosted = [
   { name: 'Portfolio', detail: 'This site, built by me and hosted on my own server.', status: 'Live', href: 'https://victorch.dev' },
-  { name: 'Gitea', detail: 'Private Git hosting for my projects, including this portfolio.', status: 'Live' },
+  { name: 'Gitea', detail: 'Private Git hosting for my projects, including this portfolio.', status: 'Live', href: 'https://repo.naspadstudio.id' },
   { name: 'Project + Invoice SaaS', detail: 'Project tracking and invoicing in one app.', status: 'Live' },
-  { name: 'WeliJayaJaya', detail: 'Currently in development.', status: 'Ongoing' },
-  { name: 'JobTracker', detail: 'Keeps track of job applications and where each one stands.', status: 'Live' },
+  { name: 'WeliJayaJaya', detail: 'Currently in development.', status: 'Ongoing', href: 'https://campaign.welijayajaya.id' },
+  { name: 'JobTracker', detail: 'Keeps track of job applications and where each one stands.', status: 'Live', href: 'https://tracking.naspadstudio.id/demo' },
 ];
 // Nav menu: each app under its first platform, then the self-hosted list.
 const workMenu: WorkGroup[] = [
@@ -44,6 +46,7 @@ const workMenu: WorkGroup[] = [
 ];
 // Header controls share one look with the nav items: same height, the blue hint on hover, press feedback.
 const headerItem = 'flex h-11 min-w-11 items-center justify-center gap-2 rounded-full text-sm font-medium text-muted-foreground transition-[color,background-color,scale] duration-200 hover:bg-ring/15 hover:text-foreground active:scale-[0.97] dark:hover:text-ring';
+const contactLink = 'inline-flex h-14 items-center gap-2 rounded-full px-7 text-base font-medium transition-[background-color,scale] duration-200 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring';
 const heroTitles = ['iOS Engineer', 'SwiftUI Developer', 'AI Software Engineer', 'Product Builder'];
 const experience: Role[] = [
   { org: 'Dotcross AI', period: 'Dec 2025 – Present', role: 'Junior AI Software Engineer', detail: 'Production Python and AWS services, LLM API integration, and monitoring that reduced per-case processing costs by 78%.' },
@@ -51,10 +54,13 @@ const experience: Role[] = [
   { org: 'Sycomora Welfare Center', period: '2021–2022', role: 'Technical Lead & UI Designer', detail: 'Directed a 5-person team launching the company website and mobile app in two-month delivery cycles.' },
 ];
 const skillBranches: Branch[] = [
-  { label: 'Build iOS', skills: ['Swift', 'SwiftUI', 'UIKit', 'HealthKit', 'MVVM'] },
-  { label: 'Ship', skills: ['Xcode Cloud', 'TestFlight', 'GitHub Actions', 'Jenkins', 'Docker'] },
-  { label: 'Data', skills: ['PostgreSQL', 'Supabase'] },
-  { label: 'Backend', skills: ['Python', 'AWS Lambda', 'REST APIs'] },
+  // Three-skill branches sit at the top and bottom, where chips have the least room; the longer ones take the sides.
+  { label: 'Ship', skills: ['Xcode Cloud', 'TestFlight', 'App Store'] },
+  { label: 'Build iOS', skills: ['Swift', 'SwiftUI', 'UIKit', 'HealthKit', 'Xcode'] },
+  { label: 'Architecture', skills: ['MVVM', 'MVC', 'Unit tests', 'Integration tests'] },
+  { label: 'Data', skills: ['PostgreSQL', 'MySQL', 'Supabase'] },
+  { label: 'Tooling', skills: ['GitHub Actions', 'Jenkins', 'Docker', 'Git', 'Postman'] },
+  { label: 'Backend', skills: ['Python', 'AWS Lambda', 'REST APIs', 'LLM APIs'] },
 ];
 // Where each skill shows up in the projects and roles above. Skills left out show a generic line.
 const skillUsedIn: Record<string, string[]> = {
@@ -62,7 +68,11 @@ const skillUsedIn: Record<string, string[]> = {
   SwiftUI: ['Reflax', 'Apple Developer Academy'],
   UIKit: ['Coco'],
   HealthKit: ['Reflax'],
-  MVVM: ['Coco'],
+  Xcode: ['Reflax', 'Coco', 'CountDown', 'Apple Developer Academy'],
+  MVVM: ['Coco', 'Apple Developer Academy'],
+  'Unit tests': ['Apple Developer Academy'],
+  'Integration tests': ['Apple Developer Academy'],
+  'App Store': ['Apple Developer Academy'],
   TestFlight: ['Reflax', 'Apple Developer Academy'],
   'Xcode Cloud': ['Apple Developer Academy'],
   Docker: ['Self-hosted homelab', 'Portfolio (self-hosted)'],
@@ -70,6 +80,7 @@ const skillUsedIn: Record<string, string[]> = {
   Python: ['Dotcross AI'],
   'AWS Lambda': ['Dotcross AI'],
   'REST APIs': ['Dotcross AI'],
+  'LLM APIs': ['Dotcross AI'],
 };
 
 export default function Home() {
@@ -77,14 +88,6 @@ export default function Home() {
   const grid = useRef<HTMLDivElement>(null);
   const [filter, setFilter] = useState('All');
   const shown = projects.filter((project) => filter === 'All' || project.platforms.includes(filter));
-  const [copied, setCopied] = useState(false);
-
-  function copyEmail() {
-    navigator.clipboard?.writeText('hello@victorch.dev').then(() => {
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
-    }).catch(() => {}); // Clipboard blocked: the mailto button and visible address still work.
-  }
 
   function selectFilter(next: string) {
     setFilter(next);
@@ -143,8 +146,8 @@ export default function Home() {
           <div className="mb-8 flex flex-wrap items-center justify-between gap-4"><FilterTabs label="Filter projects by platform" onChange={selectFilter} options={projectFilters} value={filter} /><p aria-live="polite" className="text-sm text-muted-foreground">{filter === 'All' ? '' : `Showing ${shown.length} of ${projects.length} projects`}</p></div>
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3" ref={grid}>
             {projects.map((project) => <Card className="motion-project border border-border bg-background shadow-none transition-transform duration-200 hover:-translate-y-1" hidden={!shown.includes(project)} key={project.name}>
-              <CardHeader><Badge variant="secondary">{project.stack}</Badge><CardTitle className="mt-7 text-2xl tracking-[-0.04em]">{project.name}</CardTitle><CardDescription className="max-w-sm leading-6">{project.detail}</CardDescription></CardHeader>
-              <CardContent className="mt-8 p-0"><Image alt={`${project.name} project thumbnail`} className="aspect-[16/10] w-full object-cover" height={640} src={project.image} unoptimized width={1024} /></CardContent>
+              <CardHeader className="flex-1"><Badge variant="secondary">{project.stack}</Badge><CardTitle className="mt-7 text-2xl tracking-[-0.04em]">{project.name}</CardTitle><CardDescription className="max-w-sm leading-6">{project.detail}</CardDescription></CardHeader>
+              <CardContent className="mt-8 p-0"><ProjectShot name={project.name} /></CardContent>
               <CardFooter><Button nativeButton={false} render={<a aria-label={`View ${project.name} repository`} href={project.href} rel="noreferrer" target="_blank" />} variant="link">View repository <ArrowUpRight /></Button></CardFooter>
             </Card>)}
           </div>
@@ -158,7 +161,7 @@ export default function Home() {
                 <div className="flex flex-1 flex-col gap-3 p-5">
                 <div className="flex items-center justify-between gap-3"><span className="text-lg font-semibold tracking-tight">{item.name}</span><Badge variant={item.status === 'Live' ? 'secondary' : 'outline'}>{item.status}</Badge></div>
                 <p className="text-sm leading-6 text-muted-foreground">{item.detail}</p>
-                {item.href && <a className="mt-auto inline-flex min-h-11 items-center gap-1 text-sm font-medium text-primary" href={item.href} rel="noreferrer" target="_blank">Visit site <ArrowUpRight className="size-3.5" /></a>}
+                {item.href && <a aria-label={`Visit ${item.name}`} className="mt-auto inline-flex min-h-11 items-center gap-1 text-sm font-medium text-primary" href={item.href} rel="noreferrer" target="_blank">Visit site <ArrowUpRight className="size-3.5" /></a>}
                 </div>
               </li>)}
             </ul>
@@ -180,8 +183,15 @@ export default function Home() {
           <h2 className="text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">Mobile first.<br />Useful everywhere.</h2>
           <p className="mt-6 max-w-sm text-base leading-7 text-muted-foreground">From native mobile experiences to the services and interfaces that support them, I enjoy turning an idea into a polished, practical product.</p>
           <p className="mt-6 text-sm font-medium">Bina Nusantara University · Information Systems (Applied ERP) · GPA 3.42/4.00</p>
+          <p className="mt-1 text-sm text-muted-foreground">Sep 2022 – Apr 2026</p>
         </div>
         <StackMindmap branches={skillBranches} usedIn={skillUsedIn} />
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-20 lg:px-8 lg:pb-28" id="about">
+        <h2 className="max-w-3xl text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">I build the app, and the server it talks to.</h2>
+        <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground">I&apos;m Victor, an iOS engineer trained at the Apple Developer Academy, now writing Python services on AWS at Dotcross AI. Working on both sides is why I run my own homelab: Raspberry Pi nodes hosting the tools and side projects above, built and deployed with Jenkins and Docker.</p>
+        <AboutBento />
       </section>
 
       <section className="bg-primary text-primary-foreground dark:border-t dark:border-border dark:bg-card dark:text-foreground" id="contact">
@@ -190,11 +200,10 @@ export default function Home() {
             <h2 className="max-w-2xl text-balance text-4xl font-semibold tracking-[-0.04em] sm:text-6xl">Let&apos;s make the next interaction feel effortless.</h2>
             <p className="mt-6 text-base text-primary-foreground/80 dark:text-muted-foreground">Based in Tangerang Selatan, Indonesia · GMT+7 · English, Indonesian and Mandarin (HSK 5)</p>
             <div className="mt-10 flex flex-wrap items-center gap-3">
-              <Button className="h-14 rounded-full bg-background px-7 text-base text-foreground hover:bg-background/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90" nativeButton={false} render={<a aria-label="Email Victor at hello@victorch.dev" href="mailto:hello@victorch.dev" />}><Mail /> hello@victorch.dev</Button>
-              <Button className="h-14 rounded-full border-primary-foreground/40 bg-transparent px-5 text-base text-primary-foreground hover:bg-primary-foreground/10 dark:border-border dark:text-foreground dark:hover:bg-muted" onClick={copyEmail} variant="outline">{copied ? <Check /> : <Copy />}{copied ? 'Copied' : 'Copy address'}</Button>
-              <Button className="h-14 rounded-full border-primary-foreground/40 bg-transparent px-5 text-base text-primary-foreground hover:bg-primary-foreground/10 dark:border-border dark:text-foreground dark:hover:bg-muted" nativeButton={false} render={<a aria-label="Victor on LinkedIn" href="https://linkedin.com/in/mzmznasipadang" rel="noreferrer" target="_blank" />} variant="outline">LinkedIn <ArrowUpRight /></Button>
+              {/* The envelope flies off to the right like a sent letter; LinkedIn's arrow leaves the way it points. */}
+              <FlyLink aria-label="Email Victor at hello@victorch.dev" className={cn(contactLink, 'bg-background text-foreground hover:bg-background/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90')} href="mailto:hello@victorch.dev" icon={<Mail />} label="hello@victorch.dev" toward={{ x: 14, y: 0 }} />
+              <FlyLink aria-label="Victor on LinkedIn" className={cn(contactLink, 'border border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/10 dark:border-border dark:text-foreground dark:hover:bg-muted')} external href="https://linkedin.com/in/mzmznasipadang" icon={<ArrowUpRight />} iconAfter label="LinkedIn" toward={{ x: 10, y: -10 }} />
             </div>
-            <p aria-live="polite" className="sr-only">{copied ? 'Email address copied' : ''}</p>
           </div>
           {/* Second portrait: it follows the cursor, so it turns toward the buttons as you reach for them. */}
           <Portrait className="hidden w-56 lg:block" />
