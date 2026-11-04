@@ -5,6 +5,8 @@ import { useEffect, useRef } from 'react';
 // Half-width katakana and digits, as in the Matrix code rain; narrow enough not to reflow the line.
 const GLYPHS = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789';
 const HOLD_MS = 3000;
+// One decode step every 45ms (about 22 per second) instead of every frame: slower, calmer flicker.
+const TICK_MS = 45;
 
 type Slot = { from: string; to: string; start: number; end: number; glyph: string };
 
@@ -28,7 +30,7 @@ export function MorphTitle({ words }: { words: string[] }) {
       node.replaceChildren(...slots.map((slot) => {
         if (tick >= slot.end) { settled++; return document.createTextNode(slot.to); }
         if (tick < slot.start) return document.createTextNode(slot.from);
-        if (!slot.glyph || Math.random() < 0.3) slot.glyph = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+        if (!slot.glyph || Math.random() < 0.25) slot.glyph = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
         const span = document.createElement('span');
         span.className = 'text-ring'; // sky blue in both themes, so glyphs stand out from the heading
         span.textContent = slot.glyph;
@@ -45,12 +47,17 @@ export function MorphTitle({ words }: { words: string[] }) {
         const isSpace = to[i] === ' ';
         return { from: from[i] ?? '', to: to[i] ?? '', start, end: isSpace ? start : start + 8 + Math.floor(Math.random() * 14), glyph: '' };
       });
-      let tick = 0;
-      const step = () => {
-        if (render(slots, tick++)) { timer = window.setTimeout(next, HOLD_MS); return; }
+      const startedAt = performance.now();
+      let lastTick = -1;
+      const step = (now: number) => {
+        const tick = Math.floor((now - startedAt) / TICK_MS);
+        if (tick !== lastTick) {
+          lastTick = tick;
+          if (render(slots, tick)) { timer = window.setTimeout(next, HOLD_MS); return; }
+        }
         frame = requestAnimationFrame(step);
       };
-      step();
+      step(startedAt);
     };
 
     const next = () => {
