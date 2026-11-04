@@ -21,7 +21,7 @@ export function FilterTabs({ label, options, value, onChange }: { label: string;
       {options.map((option) => (
         <button
           aria-pressed={value === option}
-          className="relative z-10 rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors not-aria-pressed:hover:text-foreground aria-pressed:text-primary-foreground max-sm:aria-pressed:bg-primary"
+          className="relative z-10 rounded-full px-4 py-1.5 max-sm:min-h-11 text-sm font-medium text-muted-foreground transition-colors not-aria-pressed:hover:text-foreground aria-pressed:text-primary-foreground max-sm:aria-pressed:bg-primary"
           key={option}
           onClick={() => onChange(option)}
           ref={(el) => { buttons.current[option] = el; }}

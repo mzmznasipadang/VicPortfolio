@@ -1,7 +1,7 @@
 'use client';
 
 import { gsap } from 'gsap';
-import { ArrowUpRight, Briefcase, House, Layers, Mail, Milestone } from 'lucide-react';
+import { ArrowUpRight, Briefcase, ChevronDown, House, Layers, Mail, Milestone } from 'lucide-react';
 import Image from 'next/image';
 import { Fragment, useEffect, useRef, useState } from 'react';
 
@@ -18,7 +18,7 @@ const items = [
   { id: 'contact', label: 'Contact', Icon: Mail },
 ];
 
-/** Icon nav with a pill that slides to the hovered or current section. Hovering Work opens a project menu with a preview. */
+/** Section nav with a pill that slides to the hovered or current section. Work has a project menu with a preview (hover, or the chevron button). */
 export function PillNav({ work = [] }: { work?: WorkGroup[] }) {
   const [active, setActive] = useState('top');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -27,6 +27,8 @@ export function PillNav({ work = [] }: { work?: WorkGroup[] }) {
   const panel = useRef<HTMLDivElement>(null);
   const previewBox = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<number>(undefined);
+  const openTimer = useRef<number>(undefined);
+  const toggle = useRef<HTMLButtonElement>(null);
   const links = useRef<Record<string, HTMLAnchorElement | null>>({});
   const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -41,19 +43,38 @@ export function PillNav({ work = [] }: { work?: WorkGroup[] }) {
     if (work.length) setMenuOpen(true);
   }
 
+  // Hover intent: only open if the pointer rests on Work, not when it just crosses the nav.
+  function openMenuSoon() {
+    window.clearTimeout(closeTimer.current);
+    window.clearTimeout(openTimer.current);
+    openTimer.current = window.setTimeout(openMenu, 180);
+  }
+
   // Short delay so the pointer can cross the gap between the icon and the panel.
   function closeMenuSoon() {
+    window.clearTimeout(openTimer.current);
     window.clearTimeout(closeTimer.current);
     closeTimer.current = window.setTimeout(() => setMenuOpen(false), 150);
   }
 
+  // Current section = the last one whose top has passed 40% of the viewport. Works for sections of any height.
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((entry) => entry.isIntersecting && setActive(entry.target.id)),
-      { rootMargin: '-45% 0px -50% 0px' },
-    );
-    items.forEach(({ id }) => { const section = document.getElementById(id); if (section) observer.observe(section); });
-    return () => observer.disconnect();
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const line = window.innerHeight * 0.4;
+      let current = items[0].id;
+      for (const { id } of items) {
+        const section = document.getElementById(id);
+        if (section && section.getBoundingClientRect().top <= line) current = id;
+      }
+      setActive(current);
+    };
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); };
   }, []);
 
   useEffect(() => moveTo(active), [active]);
@@ -68,18 +89,18 @@ export function PillNav({ work = [] }: { work?: WorkGroup[] }) {
     gsap.fromTo(previewBox.current, { opacity: 0.4, scale: 0.98 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'power2.out', overwrite: true });
   }, [preview, menuOpen]);
 
-  useEffect(() => () => window.clearTimeout(closeTimer.current), []);
+  useEffect(() => () => { window.clearTimeout(closeTimer.current); window.clearTimeout(openTimer.current); }, []);
 
   useEffect(() => {
     if (!menuOpen) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') { setMenuOpen(false); links.current.work?.focus(); } };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') { setMenuOpen(false); toggle.current?.focus(); } };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [menuOpen]);
 
-  // Close once focus leaves both the Work link and the menu.
+  // Close once focus leaves both the menu toggle and the menu.
   function closeIfFocusLeaves(next: EventTarget | null) {
-    const inside = next instanceof Node && (panel.current?.contains(next) || next === links.current.work);
+    const inside = next instanceof Node && (panel.current?.contains(next) || next === toggle.current);
     if (!inside) setMenuOpen(false);
   }
 
@@ -96,22 +117,34 @@ export function PillNav({ work = [] }: { work?: WorkGroup[] }) {
         return (
           <Fragment key={id}>
             <a
-              aria-controls={isWork ? 'work-menu' : undefined}
               aria-current={active === id ? 'location' : undefined}
-              aria-expanded={isWork ? menuOpen : undefined}
               aria-label={label}
-              className="relative z-10 grid size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:text-foreground aria-[current]:text-foreground sm:size-10"
+              className="relative z-10 flex h-11 min-w-11 items-center justify-center gap-2 rounded-full text-sm font-medium text-muted-foreground transition-colors hover:text-foreground aria-[current]:text-foreground lg:px-4"
               href={`#${id}`}
-              onBlur={(e) => { moveTo(active); if (isWork) closeIfFocusLeaves(e.relatedTarget); }}
-              onFocus={() => { moveTo(id); if (isWork) openMenu(); }}
-              onMouseEnter={() => { moveTo(id); if (isWork) openMenu(); }}
+              onBlur={() => moveTo(active)}
+              onFocus={() => moveTo(id)}
+              onMouseEnter={() => { moveTo(id); if (isWork) openMenuSoon(); }}
               onMouseLeave={() => { moveTo(active); if (isWork) closeMenuSoon(); }}
               ref={(el) => { links.current[id] = el; }}
-              title={label}
             >
               <Icon className="size-4" />
+              <span className="hidden lg:inline">{label}</span>
             </a>
-            {/* Rendered right after the Work link so Tab moves straight into the menu. */}
+            {isWork && (
+              <button
+                aria-controls="work-menu"
+                aria-expanded={menuOpen}
+                aria-label="Open project menu"
+                className="relative z-10 -ml-1 hidden h-11 w-6 items-center justify-center rounded-full text-muted-foreground hover:text-foreground md:flex"
+                onBlur={(e) => closeIfFocusLeaves(e.relatedTarget)}
+                onClick={() => (menuOpen ? setMenuOpen(false) : openMenu())}
+                ref={toggle}
+                type="button"
+              >
+                <ChevronDown className={cn('size-3.5 transition-transform', menuOpen && 'rotate-180')} />
+              </button>
+            )}
+            {/* Rendered right after the menu toggle so Tab moves straight into the menu. */}
             {isWork && menuOpen && (
               <div
                 className="absolute top-full left-1/2 z-20 hidden w-[min(52rem,calc(100vw-16rem))] -translate-x-1/2 pt-3 md:block"

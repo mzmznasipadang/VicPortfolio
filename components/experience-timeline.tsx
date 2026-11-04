@@ -18,7 +18,7 @@ export function ExperienceTimeline({ roles }: { roles: Role[] }) {
     media.add('(prefers-reduced-motion: no-preference)', () => {
       gsap.fromTo(el.querySelector('.timeline-progress'), { scaleY: 0 }, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: el, start: 'top 70%', end: 'bottom 60%', scrub: 0.5 } });
       el.querySelectorAll('.timeline-item').forEach((item) => {
-        gsap.from(item, { opacity: 0, y: 24, duration: 0.6, ease: 'power3.out', scrollTrigger: { trigger: item, start: 'top 85%' } });
+        gsap.from(item, { opacity: 0.35, y: 24, duration: 0.6, ease: 'power3.out', scrollTrigger: { trigger: item, start: 'top 85%' } });
       });
     }, el);
     return () => media.revert();

@@ -20,7 +20,7 @@ for (const file of ['../app/robots.ts', '../app/sitemap.ts', '../public/og.png']
 assert.ok(layout.includes('title: { default:'));
 assert.ok(layout.includes('metadataBase'));
 
-for (const text of ['Reflax', 'CountDown', 'ADASayembara', 'Coco', 'AshMap', 'Download Resume', 'Apple Developer Academy', 'Dotcross AI', '78%', 'HealthKit', 'Bina Nusantara University', 'hello@victorch.dev', '<Portrait ', 'https://linkedin.com/in/mzmznasipadang', 'id="work"', 'id="stack"', 'id="contact"', "'Self-hosted'", "selectFilter('Self-hosted')"]) {
+for (const text of ['Reflax', 'CountDown', 'ADASayembara', 'Coco', 'AshMap', 'Download Resume', 'Apple Developer Academy', 'Dotcross AI', '78%', 'HealthKit', 'Bina Nusantara University', 'hello@victorch.dev', '<Portrait ', 'https://linkedin.com/in/mzmznasipadang', 'id="work"', 'id="stack"', 'id="contact"', 'id="self-hosted"', 'href="#self-hosted"']) {
   assert.ok(page.includes(text), `Missing ${text}`);
 }
 

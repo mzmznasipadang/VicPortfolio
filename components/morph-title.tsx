@@ -37,7 +37,7 @@ export function MorphTitle({ words }: { words: string[] }) {
       };
       step();
       timeline
-        .to(state, { f: 0.9999, duration: 1, ease: 'none', delay: 2, onUpdate: paint })
+        .to(state, { f: 0.9999, duration: 1, ease: 'none', delay: 3, onUpdate: paint })
         .call(() => { index++; step(); });
       return () => timeline.kill();
     });

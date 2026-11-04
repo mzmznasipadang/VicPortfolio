@@ -114,7 +114,7 @@ export function StackMindmap({ branches, usedIn }: { branches: Branch[]; usedIn:
           return (
             <div key={branch.label}>
               <button
-                className={cn('absolute -translate-1/2 rounded-full border-2 border-primary bg-background px-4 py-2 text-sm font-semibold whitespace-nowrap transition-opacity duration-300', dim && 'opacity-40', active === branch.label && 'bg-primary text-primary-foreground')}
+                className={cn('absolute -translate-1/2 rounded-full border-2 border-primary bg-background px-4 py-2 text-sm font-semibold whitespace-nowrap transition-opacity duration-300', dim && 'opacity-70', active === branch.label && 'bg-primary text-primary-foreground')}
                 onBlur={() => setHovered(undefined)}
                 onFocus={() => setHovered(branch.label)}
                 onMouseEnter={() => setHovered(branch.label)}
@@ -131,7 +131,7 @@ export function StackMindmap({ branches, usedIn }: { branches: Branch[]; usedIn:
                     className={cn(
                       'cursor-grab rounded-full border px-3 py-1.5 text-sm font-medium whitespace-nowrap shadow-sm transition-[opacity,background-color,color] duration-300 active:cursor-grabbing',
                       selected === skill ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-card hover:border-primary',
-                      dim && 'opacity-40',
+                      dim && 'opacity-70',
                     )}
                     data-skill={skill}
                     onBlur={() => setHovered(undefined)}
@@ -158,7 +158,7 @@ export function StackMindmap({ branches, usedIn }: { branches: Branch[]; usedIn:
               {branch.skills.map((skill) => (
                 <button
                   aria-pressed={selected === skill}
-                  className={cn('rounded-full border px-3 py-1.5 text-sm font-medium', selected === skill ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-card')}
+                  className={cn('min-h-11 rounded-full border px-4 text-sm font-medium', selected === skill ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-card')}
                   key={skill}
                   onClick={() => setSelected(selected === skill ? undefined : skill)}
                   type="button"
