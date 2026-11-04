@@ -5,11 +5,6 @@ const index = new URL('../dist/client/index.html', import.meta.url);
 assert.ok(existsSync(index), 'Static export is missing index.html');
 
 const page = readFileSync(index, 'utf8');
-for (const image of ['reflax.webp', 'coco.webp', 'countdown.webp', 'adasayembara.webp', 'ashmap.webp']) {
-  // The cards draw stageshow shots now; the thumbnails are only loaded by the Work menu, so check they ship.
-  assert.ok(existsSync(new URL(`../dist/client/projects/${image}`, import.meta.url)), `Static export is missing image: ${image}`);
-}
-
 assert.ok(page.includes('href="favicon.svg"'), 'Static export has an invalid favicon path');
 
 const site = 'https://victorch.dev/';
@@ -26,7 +21,7 @@ for (const route of ['privacy', 'terms']) {
     assert.ok(html.includes(`${property} content="${title}`), `${route} needs its own social title`);
   }
   const description = route === 'privacy'
-    ? 'How Victor Chandra’s portfolio handles visitor preferences and links.'
+    ? 'How Victor Chandra’s portfolio handles visitor preferences, analytics and links.'
     : 'Terms for using Victor Chandra’s portfolio.';
   for (const property of ['name="description"', 'property="og:description"', 'name="twitter:description"']) {
     assert.ok(html.includes(`${property} content="${description}"`), `${route} needs its own description`);

@@ -48,9 +48,13 @@ const starFragment = /* glsl */ `
   }
 `;
 
-// Full-screen quad: two noise ridges plus a soft glow above them.
+// Full-screen quad: two noise ridges, a soft glow above them, and (dark mode) the odd shooting star behind them.
 const ridgeFragment = /* glsl */ `
   uniform vec2 uResolution;
+  uniform vec2 uMeteorHead;
+  uniform vec2 uMeteorDir;
+  uniform float uMeteorLen;
+  uniform float uMeteorAlpha;
   uniform float uTime;
   uniform vec2 uPointer;
   uniform vec3 uBack;
@@ -73,6 +77,19 @@ const ridgeFragment = /* glsl */ `
 
     float glow = exp(-max(vUv.y - back, 0.0) * 9.0 / k) * 0.35 * (0.8 + 0.2 * sin(uTime * 0.4 + x));
     vec4 color = vec4(uGlow, glow * step(back, vUv.y));
+
+    // Shooting star: a tail fading back from a bright head, composited over the sky.
+    if (uMeteorAlpha > 0.0) {
+      vec2 q = vec2(x, vUv.y) - uMeteorHead;
+      float along = dot(q, -uMeteorDir);
+      float across = abs(dot(q, vec2(-uMeteorDir.y, uMeteorDir.x)));
+      float px = 1.0 / uResolution.y;
+      float tail = step(0.0, along) * pow(max(1.0 - along / uMeteorLen, 0.0), 2.0) * smoothstep(1.6 * px, 0.0, across);
+      float head = exp(-length(q) / (2.5 * px));
+      float m = clamp((tail + head) * uMeteorAlpha, 0.0, 1.0);
+      float a = m + color.a * (1.0 - m);
+      color = vec4((mix(uGlow, vec3(1.0), 0.75) * m + color.rgb * color.a * (1.0 - m)) / max(a, 0.0001), a);
+    }
     float backMask = smoothstep(back + edge, back - edge, vUv.y);
     color = mix(color, vec4(uBack, 1.0), backMask);
     float frontMask = smoothstep(front + edge, front - edge, vUv.y);
@@ -138,12 +155,51 @@ export function mountHeroScene(canvas: HTMLCanvasElement, host: HTMLElement) {
       uBack: { value: new Color() },
       uFront: { value: new Color() },
       uGlow: { value: new Color() },
+      uMeteorHead: { value: new Vector2() },
+      uMeteorDir: { value: new Vector2(1, 0) },
+      uMeteorLen: { value: 0.15 },
+      uMeteorAlpha: { value: 0 },
     },
   });
   ridgeScene.add(new Mesh(ridgeGeometry, ridgeMaterial));
 
+  // Shooting stars: one at a time, dark mode only, every 6–15s at a random spot and angle.
+  // Timed on the loop's clock, so they pause with it (hidden tab, reduced motion, theme switch).
+  let dark = false;
+  let nextMeteor = 3 + Math.random() * 4;
+  let meteor: { start: Vector2; dir: Vector2; travel: number; from: number; duration: number } | undefined;
+  function updateMeteor(t: number) {
+    const u = ridgeMaterial.uniforms;
+    if (!meteor && dark && t >= nextMeteor) {
+      const aspect = u.uResolution.value.x / u.uResolution.value.y;
+      const angle = ((20 + Math.random() * 15) * Math.PI) / 180;
+      const side = Math.random() < 0.5 ? -1 : 1; // falling left or right
+      meteor = {
+        start: new Vector2((side < 0 ? 0.35 + Math.random() * 0.6 : 0.05 + Math.random() * 0.6) * aspect, 0.6 + Math.random() * 0.32),
+        dir: new Vector2(side * Math.cos(angle), -Math.sin(angle)),
+        travel: 0.3 + Math.random() * 0.25,
+        from: t,
+        duration: 0.7 + Math.random() * 0.5,
+      };
+      u.uMeteorDir.value.copy(meteor.dir);
+      u.uMeteorLen.value = 0.1 + Math.random() * 0.1;
+    }
+    if (!meteor) return;
+    const progress = (t - meteor.from) / meteor.duration;
+    if (progress >= 1 || !dark) {
+      meteor = undefined;
+      u.uMeteorAlpha.value = 0;
+      nextMeteor = t + 6 + Math.random() * 9;
+      return;
+    }
+    u.uMeteorHead.value.copy(meteor.start).addScaledVector(meteor.dir, progress * meteor.travel);
+    u.uMeteorAlpha.value = Math.sin(Math.PI * progress);
+  }
+
   function applyTheme() {
-    const p = document.documentElement.classList.contains('dark') ? palettes.dark : palettes.light;
+    dark = document.documentElement.classList.contains('dark');
+    const p = dark ? palettes.dark : palettes.light;
+    if (!dark) ridgeMaterial.uniforms.uMeteorAlpha.value = 0;
     // Additive blending vanishes on white, so light mode draws stars normally.
     starMaterial.blending = p === palettes.dark ? AdditiveBlending : NormalBlending;
     starMaterial.needsUpdate = true;
@@ -178,6 +234,7 @@ export function mountHeroScene(canvas: HTMLCanvasElement, host: HTMLElement) {
     starMaterial.uniforms.uTime.value = t;
     ridgeMaterial.uniforms.uTime.value = t;
     ridgeMaterial.uniforms.uPointer.value.copy(pointer);
+    if (running) updateMeteor(t);
     renderer.clear();
     renderer.render(starScene, camera);
     renderer.render(ridgeScene, ridgeCamera);

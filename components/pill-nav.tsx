@@ -2,12 +2,11 @@
 
 import { gsap } from 'gsap';
 import { ArrowUpRight, Briefcase, ChevronDown, House, Layers, Mail, Milestone } from 'lucide-react';
-import Image from 'next/image';
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState, type ReactNode } from 'react';
 
 import { cn } from '@/lib/utils';
 
-export type WorkItem = { name: string; caption: string; image?: string; href?: string };
+export type WorkItem = { name: string; caption: string; shot?: ReactNode; href?: string };
 export type WorkGroup = { label: string; items: WorkItem[] };
 
 const items = [
@@ -181,8 +180,8 @@ export function PillNav({ work = [] }: { work?: WorkGroup[] }) {
                   </div>
                   <div className="flex flex-col p-6">
                     <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-muted" ref={previewBox}>
-                      {preview?.image
-                        ? <Image alt="" className="size-full object-cover" height={640} src={preview.image} unoptimized width={1024} />
+                      {preview?.shot
+                        ? <div className="size-full" data-ss-fill>{preview.shot}</div>
                         : <div className="grid size-full place-items-center bg-gradient-to-br from-secondary to-muted p-8 text-center"><p className="text-3xl font-semibold tracking-[-0.04em] text-foreground">{preview?.name}</p></div>}
                     </div>
                     <div className="mt-auto flex items-center justify-between gap-4 pt-6 text-sm text-muted-foreground">

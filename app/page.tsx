@@ -16,6 +16,7 @@ import { FlyLink } from '@/components/fly-link';
 import { HeroScene } from '@/components/hero-scene';
 import { MorphTitle } from '@/components/morph-title';
 import { Portrait } from '@/components/portrait';
+import { CookiePreferences } from '@/components/cookie-consent';
 import { ProjectShot } from '@/components/project-shots';
 import { SelfHostedShot } from '@/components/self-hosted-shots';
 import { ResumeButton } from '@/components/resume-button';
@@ -24,11 +25,11 @@ import { type Branch, StackMindmap } from '@/components/stack-mindmap';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 const projects = [
-  { name: 'Reflax', platforms: ['iOS'], detail: 'Health companion app using HealthKit, adaptive scheduling, accessibility support, and secure on-device health-data handling.', stack: 'SwiftUI · HealthKit', href: 'https://testflight.apple.com/join/J77sp3K5', image: 'projects/reflax.webp' },
-  { name: 'Coco', platforms: ['iOS'], detail: 'A native iOS travel activity booking app with discovery, search, booking flows, and trip management.', stack: 'UIKit · MVVM', href: 'https://github.com/mzmznasipadang/LinCoCoCooo', image: 'projects/coco.webp' },
-  { name: 'CountDown', platforms: ['macOS'], detail: 'A lightweight macOS menu bar app that counts down to upcoming calendar events in real time, with meeting links, snooze controls, and calendar-aware alerts.', stack: 'macOS · Swift', href: 'https://github.com/mzmznasipadang/CountDown', image: 'projects/countdown.webp' },
-  { name: 'ADASayembara', platforms: ['iOS', 'Web'], detail: 'A real-time queue management system for the Shoot & Win event, with live queue status across attendees and admins, QR access, notifications, and protected admin controls.', stack: 'iOS · Web', href: 'https://github.com/mzmznasipadang/ADASayembara', image: 'projects/adasayembara.webp' },
-  { name: 'AshMap', platforms: ['Web'], detail: 'A live Indonesian volcanic ash advisory map that plots real Darwin VAAC ash polygons, wind vectors, forecast drift, airport impacts, and GIS-ready data.', stack: 'Web · GIS', href: 'https://github.com/mzmznasipadang/ash-map', image: 'projects/ashmap.webp' },
+  { name: 'Reflax', platforms: ['iOS'], detail: 'Health companion app using HealthKit, adaptive scheduling, accessibility support, and secure on-device health-data handling.', stack: 'SwiftUI · HealthKit', href: 'https://testflight.apple.com/join/J77sp3K5' },
+  { name: 'Coco', platforms: ['iOS'], detail: 'A native iOS travel activity booking app with discovery, search, booking flows, and trip management.', stack: 'UIKit · MVVM', href: 'https://github.com/mzmznasipadang/LinCoCoCooo' },
+  { name: 'CountDown', platforms: ['macOS'], detail: 'A lightweight macOS menu bar app that counts down to upcoming calendar events in real time, with meeting links, snooze controls, and calendar-aware alerts.', stack: 'macOS · Swift', href: 'https://github.com/mzmznasipadang/CountDown' },
+  { name: 'ADASayembara', platforms: ['iOS', 'Web'], detail: 'A real-time queue management system for the Shoot & Win event, with live queue status across attendees and admins, QR access, notifications, and protected admin controls.', stack: 'iOS · Web', href: 'https://github.com/mzmznasipadang/ADASayembara' },
+  { name: 'AshMap', platforms: ['Web'], detail: 'A live Indonesian volcanic ash advisory map that plots real Darwin VAAC ash polygons, wind vectors, forecast drift, airport impacts, and GIS-ready data.', stack: 'Web · GIS', href: 'https://github.com/mzmznasipadang/ash-map' },
 ];
 
 const projectFilters = ['All', 'iOS', 'macOS', 'Web'];
@@ -41,8 +42,8 @@ const selfHosted = [
 ];
 // Nav menu: each app under its first platform, then the self-hosted list.
 const workMenu: WorkGroup[] = [
-  ...['iOS', 'macOS', 'Web'].map((label) => ({ label, items: projects.filter((p) => p.platforms[0] === label).map((p) => ({ name: p.name, caption: p.stack, image: p.image, href: p.href })) })),
-  { label: 'Self-hosted', items: selfHosted.map((item) => ({ name: item.name, caption: item.status, href: item.href ?? '#self-hosted' })) },
+  ...['iOS', 'macOS', 'Web'].map((label) => ({ label, items: projects.filter((p) => p.platforms[0] === label).map((p) => ({ name: p.name, caption: p.stack, shot: <ProjectShot name={p.name} />, href: p.href })) })),
+  { label: 'Self-hosted', items: selfHosted.map((item) => ({ name: item.name, caption: item.status, shot: <SelfHostedShot height={220} name={item.name} />, href: item.href ?? '#self-hosted' })) },
 ];
 // Header controls share one look with the nav items: same height, the blue hint on hover, press feedback.
 const headerItem = 'flex h-11 min-w-11 items-center justify-center gap-2 rounded-full text-sm font-medium text-muted-foreground transition-[color,background-color,scale] duration-200 hover:bg-ring/15 hover:text-foreground active:scale-[0.97] dark:hover:text-ring';
@@ -209,7 +210,7 @@ export default function Home() {
           <Portrait className="hidden w-56 lg:block" />
         </div>
       </section>
-      <footer className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-7 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between lg:px-8"><span>© {new Date().getFullYear()} Victor Chandra</span><div className="flex flex-wrap gap-x-5 [&_a]:inline-flex [&_a]:min-h-11 [&_a]:items-center [&_a]:hover:text-foreground"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="#self-hosted">Self-hosted</a><a href="https://github.com/mzmznasipadang" rel="noreferrer" target="_blank">GitHub</a><a href="https://linkedin.com/in/mzmznasipadang" rel="noreferrer" target="_blank">LinkedIn</a></div></footer>
+      <footer className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-7 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between lg:px-8"><span>© {new Date().getFullYear()} Victor Chandra</span><div className="flex flex-wrap gap-x-5 [&>*]:inline-flex [&>*]:min-h-11 [&>*]:items-center [&>*]:hover:text-foreground"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><CookiePreferences /><a href="#self-hosted">Self-hosted</a><a href="https://github.com/mzmznasipadang" rel="noreferrer" target="_blank">GitHub</a><a href="https://linkedin.com/in/mzmznasipadang" rel="noreferrer" target="_blank">LinkedIn</a></div></footer>
     </main>
   );
 }

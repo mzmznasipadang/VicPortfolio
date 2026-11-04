@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 
+import { CookiePreferences } from '@/components/cookie-consent';
 import { LegalPage } from '@/components/legal-page';
 
 const title = 'Privacy Policy';
-const description = 'How Victor Chandra’s portfolio handles visitor preferences and links.';
+const description = 'How Victor Chandra’s portfolio handles visitor preferences, analytics and links.';
 const url = 'https://victorch.dev/privacy.html';
 const images = ['https://victorch.dev/og.png'];
 
@@ -28,8 +29,12 @@ export default function PrivacyPage() {
       </section>
       <section>
         <h2 className="text-xl font-semibold text-foreground">Local preferences</h2>
-        <p className="mt-3">Your consent choice is saved in your browser&apos;s local storage under <code>cookie-consent</code> so the banner can remember your choice. It is not sent to Victor Chandra. No analytics, advertising, or non-essential cookies are used.</p>
-        <p className="mt-3">To reset your choice, clear this site&apos;s stored data in your browser settings, then reload the page. If your browser blocks storage, you can still dismiss the banner, but your choice will not be remembered after you reload.</p>
+        <p className="mt-3">Your consent choice is saved in your browser&apos;s local storage under <code>cookie-consent-v2</code> so the banner can remember your choice. No advertising cookies are used.</p>
+        <p className="mt-3">To change your choice, use <CookiePreferences className="text-primary underline" />; the banner will ask again. If your browser blocks storage, you can still dismiss the banner, but your choice will not be remembered after you reload.</p>
+      </section>
+      <section>
+        <h2 className="text-xl font-semibold text-foreground">Analytics</h2>
+        <p className="mt-3">Only if you choose Accept, the site loads Google Analytics, which sets cookies (<code>_ga</code> and <code>_ga_*</code>) and sends Google page views, approximate location and device details so Victor Chandra can see how the site is used. Google processes this under its own <a className="text-primary underline" href="https://policies.google.com/privacy" rel="noreferrer" target="_blank">privacy policy</a>. If you choose Decline, Google Analytics is never loaded.</p>
       </section>
       <section>
         <h2 className="text-xl font-semibold text-foreground">External links and email</h2>

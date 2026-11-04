@@ -34,9 +34,9 @@ export function Shot({ children, height = 190, className = 'shs' }: { children: 
   );
 }
 
-function PortfolioShot() {
+function PortfolioShot({ height }: { height?: number }) {
   return (
-    <Shot>
+    <Shot height={height}>
       <Window className="shs-window" url="victorch.dev" urlShape="pill">
         <div className="shs-page shs-hero">
           <div className="shs-hero__copy">
@@ -59,9 +59,9 @@ const COMMITS = [
   { w: 108 },
 ];
 
-function GiteaShot() {
+function GiteaShot({ height }: { height?: number }) {
   return (
-    <Shot>
+    <Shot height={height}>
       <Window className="shs-window" title="victor / VicPortfolio">
         <div className="shs-page">
           <div className="shs-tabs"><Text className="shs-tab" data-on>Code</Text><Text className="shs-tab">Commits</Text><Text className="shs-tab">Releases</Text></div>
@@ -83,9 +83,9 @@ function GiteaShot() {
   );
 }
 
-function InvoiceShot() {
+function InvoiceShot({ height }: { height?: number }) {
   return (
-    <Shot>
+    <Shot height={height}>
       <Window className="shs-window" title="Invoices">
         <div className="shs-page">
           <div className="shs-head"><Text className="shs-h">Invoices</Text><span className="shs-pill" /></div>
@@ -101,9 +101,9 @@ function InvoiceShot() {
   );
 }
 
-function DeployShot() {
+function DeployShot({ height }: { height?: number }) {
   return (
-    <Shot>
+    <Shot height={height}>
       <Window chrome="terminal" className="shs-window" title="welijayajaya — zsh">
         <div className="shs-term">
           <Prompt path="~/welijayajaya">git pull</Prompt>
@@ -123,9 +123,9 @@ const BOARD = [
   { label: 'Offer', cards: [{ w: 40 }] },
 ];
 
-function JobTrackerShot() {
+function JobTrackerShot({ height }: { height?: number }) {
   return (
-    <Shot>
+    <Shot height={height}>
       <Window className="shs-window" title="JobTracker">
         <div className="shs-page shs-board">
           {BOARD.map((col) => (
@@ -145,7 +145,7 @@ function JobTrackerShot() {
   );
 }
 
-const SHOTS: Record<string, () => ReactNode> = {
+const SHOTS: Record<string, (p: { height?: number }) => ReactNode> = {
   Portfolio: PortfolioShot,
   Gitea: GiteaShot,
   'Project + Invoice SaaS': InvoiceShot,
@@ -153,8 +153,8 @@ const SHOTS: Record<string, () => ReactNode> = {
   JobTracker: JobTrackerShot,
 };
 
-/** The product shot for a self-hosted project, or nothing if it has none. */
-export function SelfHostedShot({ name }: { name: string }) {
+/** The product shot for a self-hosted project, or nothing if it has none. `height` crops taller (the Work menu uses 220, its 16:10 box). */
+export function SelfHostedShot({ name, height }: { name: string; height?: number }) {
   const ShotFor = SHOTS[name];
-  return ShotFor ? <ShotFor /> : null;
+  return ShotFor ? <ShotFor height={height} /> : null;
 }
