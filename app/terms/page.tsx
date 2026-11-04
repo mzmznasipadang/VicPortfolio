@@ -36,7 +36,7 @@ export default function TermsPage() {
       </section>
       <section>
         <h2 className="text-xl font-semibold text-foreground">Contact</h2>
-        <p className="mt-3">For questions about this site, use the <a className="text-primary underline" href="mailto:vichndrlie@outlook.com">mailto contact option</a>.</p>
+        <p className="mt-3">For questions about this site, use the <a className="text-primary underline" href="mailto:hello@victorch.dev">mailto contact option</a>.</p>
       </section>
     </LegalPage>
   );

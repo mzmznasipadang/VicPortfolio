@@ -33,7 +33,7 @@ export default function PrivacyPage() {
       </section>
       <section>
         <h2 className="text-xl font-semibold text-foreground">External links and email</h2>
-        <p className="mt-3">Links to external sites, including GitHub and LinkedIn, are governed by those sites&apos; own policies. The <a className="text-primary underline" href="mailto:vichndrlie@outlook.com">mailto contact option</a> opens your email application; an email is only shared when you choose to send it.</p>
+        <p className="mt-3">Links to external sites, including GitHub and LinkedIn, are governed by those sites&apos; own policies. The <a className="text-primary underline" href="mailto:hello@victorch.dev">mailto contact option</a> opens your email application; an email is only shared when you choose to send it.</p>
       </section>
     </LegalPage>
   );

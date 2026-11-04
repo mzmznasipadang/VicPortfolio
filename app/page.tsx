@@ -23,6 +23,13 @@ const projects = [
   { name: 'AshMap', detail: 'A live Indonesian volcanic ash advisory map that plots real Darwin VAAC ash polygons, wind vectors, forecast drift, airport impacts, and GIS-ready data.', stack: 'Web · GIS', href: 'https://github.com/mzmznasipadang/ash-map', image: 'projects/ashmap.png' },
 ];
 
+const selfHosted = [
+  { name: 'Portfolio', detail: 'This site: a static export served by Caddy in Docker on my own server.', status: 'Live', href: 'https://victorch.dev' },
+  { name: 'Gitea', detail: 'Private Git hosting for my projects, including this portfolio.', status: 'Live' },
+  { name: 'Project + Invoice SaaS', detail: 'Project tracking and invoicing in one app.', status: 'Live' },
+  { name: 'WeliJayaJaya', detail: 'Currently in development.', status: 'Ongoing' },
+  { name: 'JobTracker', detail: 'Keeps track of job applications and where each one stands.', status: 'Live' },
+];
 const heroTitles = ['iOS Engineer', 'SwiftUI Developer', 'AI Software Engineer', 'Product Builder'];
 const mobileStack = ['Swift', 'SwiftUI', 'UIKit', 'HealthKit', 'MVVM', 'Xcode Cloud', 'TestFlight'];
 const engineeringStack = ['Python', 'AWS Lambda', 'REST APIs', 'PostgreSQL', 'Supabase', 'GitHub Actions', 'Jenkins', 'Docker'];
@@ -98,8 +105,22 @@ export default function Home() {
         <div className="space-y-9"><div><p className="mb-4 text-sm font-medium">Mobile development</p><div className="flex flex-wrap gap-2">{mobileStack.map((skill) => <Badge className="h-7 px-3" key={skill} variant="outline">{skill}</Badge>)}</div></div><Separator /><div><p className="mb-4 text-sm font-medium">Software engineering</p><div className="flex flex-wrap gap-2">{engineeringStack.map((skill) => <Badge className="h-7 px-3" key={skill} variant="outline">{skill}</Badge>)}</div></div><Separator /><p className="max-w-xl text-base leading-7 text-muted-foreground">From native mobile experiences to the services and interfaces that support them, I enjoy turning an idea into a polished, practical product.</p><p className="text-sm font-medium">Bina Nusantara University · Information Systems (Applied ERP) · GPA 3.42/4.00</p></div>
       </section>
 
-      <section className="bg-primary text-primary-foreground" id="contact"><div className="mx-auto flex max-w-6xl flex-col justify-between gap-12 px-6 py-20 lg:flex-row lg:items-end lg:px-8 lg:py-28"><div><p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground/60">Get in touch</p><h2 className="mt-3 max-w-2xl text-balance text-4xl font-semibold tracking-[-0.05em] sm:text-6xl">Let&apos;s make the next interaction feel effortless.</h2></div><Button className="w-fit bg-background text-foreground hover:bg-background/85" nativeButton={false} render={<a aria-label="Email Victor at vichndrlie@outlook.com" href="mailto:vichndrlie@outlook.com" />} size="lg"><Mail /> vichndrlie@outlook.com</Button></div></section>
-      <footer className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-7 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between lg:px-8"><span>© {new Date().getFullYear()} Victor Chandra</span><div className="flex flex-wrap gap-x-5 gap-y-2"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="https://github.com/mzmznasipadang" rel="noreferrer" target="_blank">GitHub</a><a href="https://linkedin.com/in/mzmznasipadang" rel="noreferrer" target="_blank">LinkedIn</a></div></footer>
+      <section className="border-t border-border" id="self-hosted">
+        <div className="mx-auto max-w-6xl px-6 py-20 lg:px-8 lg:py-28">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Self-hosted</p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">Running on my own server.</h2>
+          <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {selfHosted.map((item) => <li className="flex flex-col gap-3 rounded-xl border border-border bg-card p-6" key={item.name}>
+              <div className="flex items-center justify-between gap-3"><h3 className="text-lg font-semibold tracking-tight">{item.name}</h3><Badge variant={item.status === 'Live' ? 'secondary' : 'outline'}>{item.status}</Badge></div>
+              <p className="text-sm leading-6 text-muted-foreground">{item.detail}</p>
+              {item.href && <a className="mt-auto text-sm font-medium text-primary" href={item.href} rel="noreferrer" target="_blank">Visit <ArrowUpRight className="ml-0.5 inline size-3.5" /></a>}
+            </li>)}
+          </ul>
+        </div>
+      </section>
+
+      <section className="bg-primary text-primary-foreground" id="contact"><div className="mx-auto flex max-w-6xl flex-col justify-between gap-12 px-6 py-20 lg:flex-row lg:items-end lg:px-8 lg:py-28"><div><p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground/60">Get in touch</p><h2 className="mt-3 max-w-2xl text-balance text-4xl font-semibold tracking-[-0.05em] sm:text-6xl">Let&apos;s make the next interaction feel effortless.</h2></div><Button className="w-fit bg-background text-foreground hover:bg-background/85" nativeButton={false} render={<a aria-label="Email Victor at hello@victorch.dev" href="mailto:hello@victorch.dev" />} size="lg"><Mail /> hello@victorch.dev</Button></div></section>
+      <footer className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-7 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between lg:px-8"><span>© {new Date().getFullYear()} Victor Chandra</span><div className="flex flex-wrap gap-x-5 gap-y-2"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="#self-hosted">Self-hosted</a><a href="https://github.com/mzmznasipadang" rel="noreferrer" target="_blank">GitHub</a><a href="https://linkedin.com/in/mzmznasipadang" rel="noreferrer" target="_blank">LinkedIn</a></div></footer>
     </main>
   );
 }
