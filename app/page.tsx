@@ -9,12 +9,13 @@ import { gsap } from 'gsap';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import { ExperienceTimeline, type Role } from '@/components/experience-timeline';
 import { FilterTabs } from '@/components/filter-tabs';
 import { HeroScene } from '@/components/hero-scene';
 import { MorphTitle } from '@/components/morph-title';
 import { Portrait } from '@/components/portrait';
 import { PillNav, type WorkGroup } from '@/components/pill-nav';
+import { type Branch, StackMindmap } from '@/components/stack-mindmap';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 const projects = [
@@ -39,8 +40,31 @@ const workMenu: WorkGroup[] = [
   { label: 'Self-hosted', items: selfHosted.map((item) => ({ name: item.name, caption: item.status, href: item.href })) },
 ];
 const heroTitles = ['iOS Engineer', 'SwiftUI Developer', 'AI Software Engineer', 'Product Builder'];
-const mobileStack = ['Swift', 'SwiftUI', 'UIKit', 'HealthKit', 'MVVM', 'Xcode Cloud', 'TestFlight'];
-const engineeringStack = ['Python', 'AWS Lambda', 'REST APIs', 'PostgreSQL', 'Supabase', 'GitHub Actions', 'Jenkins', 'Docker'];
+const experience: Role[] = [
+  { org: 'Dotcross AI', period: 'Present', role: 'Junior AI Software Engineer', detail: 'Production Python and AWS services, LLM API integration, and monitoring that reduced per-case processing costs by 78%.' },
+  { org: 'Apple Developer Academy', period: '2025', role: 'iOS Developer', detail: 'Selected from 10,000+ applicants; shipped six apps, worked in two-week release cycles, and progressed to leading 4-person teams.' },
+  { org: 'Sycomora Welfare Center', period: '2021–2022', role: 'Technical Lead & UI Designer', detail: 'Directed a 5-person team launching the company website and mobile app in two-month delivery cycles.' },
+];
+const skillBranches: Branch[] = [
+  { label: 'Build iOS', skills: ['Swift', 'SwiftUI', 'UIKit', 'HealthKit', 'MVVM'] },
+  { label: 'Ship', skills: ['Xcode Cloud', 'TestFlight', 'GitHub Actions', 'Jenkins', 'Docker'] },
+  { label: 'Data', skills: ['PostgreSQL', 'Supabase'] },
+  { label: 'Backend', skills: ['Python', 'AWS Lambda', 'REST APIs'] },
+];
+// Where each skill shows up in the projects and roles above. Skills left out show a generic line.
+const skillUsedIn: Record<string, string[]> = {
+  Swift: ['Reflax', 'Coco', 'CountDown', 'Apple Developer Academy'],
+  SwiftUI: ['Reflax', 'Apple Developer Academy'],
+  UIKit: ['Coco'],
+  HealthKit: ['Reflax'],
+  MVVM: ['Coco'],
+  TestFlight: ['Reflax', 'Apple Developer Academy'],
+  'Xcode Cloud': ['Apple Developer Academy'],
+  Docker: ['Portfolio (self-hosted)'],
+  Python: ['Dotcross AI'],
+  'AWS Lambda': ['Dotcross AI'],
+  'REST APIs': ['Dotcross AI'],
+};
 
 export default function Home() {
   const page = useRef<HTMLElement>(null);
@@ -120,16 +144,21 @@ export default function Home() {
       <section className="mx-auto max-w-6xl px-6 py-20 lg:px-8 lg:py-28" id="experience">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Experience</p>
         <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">Mobile craft with production depth.</h2>
-        <div className="mt-10 grid gap-8 border-t border-border pt-8 md:grid-cols-3">
-          <article><p className="text-sm font-medium">Dotcross AI · Present</p><h3 className="mt-2 text-xl font-semibold tracking-tight">Junior AI Software Engineer</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">Production Python and AWS services, LLM API integration, and monitoring that reduced per-case processing costs by 78%.</p></article>
-          <article><p className="text-sm font-medium">Apple Developer Academy · 2025</p><h3 className="mt-2 text-xl font-semibold tracking-tight">iOS Developer</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">Selected from 10,000+ applicants; shipped six apps, worked in two-week release cycles, and progressed to leading 4-person teams.</p></article>
-          <article><p className="text-sm font-medium">Sycomora Welfare Center · 2021–2022</p><h3 className="mt-2 text-xl font-semibold tracking-tight">Technical Lead &amp; UI Designer</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">Directed a 5-person team launching the company website and mobile app in two-month delivery cycles.</p></article>
+        <div className="mt-10 flex flex-wrap items-center gap-x-10 gap-y-4 border-y border-border py-6">
+          <p className="text-sm text-muted-foreground">Built and learned at</p>
+          {['Dotcross AI', 'Apple Developer Academy', 'Sycomora', 'BINUS University'].map((name) => <span className="text-lg font-semibold tracking-[-0.03em] text-foreground/70" key={name}>{name}</span>)}
         </div>
+        <ExperienceTimeline roles={experience} />
       </section>
 
       <section className="mx-auto grid max-w-6xl gap-14 px-6 py-20 lg:grid-cols-[0.7fr_1.3fr] lg:px-8 lg:py-28" id="stack">
-        <div><p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Capabilities</p><h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">Mobile first.<br />Useful everywhere.</h2></div>
-        <div className="space-y-9"><div><p className="mb-4 text-sm font-medium">Mobile development</p><div className="flex flex-wrap gap-2">{mobileStack.map((skill) => <Badge className="h-7 px-3" key={skill} variant="outline">{skill}</Badge>)}</div></div><Separator /><div><p className="mb-4 text-sm font-medium">Software engineering</p><div className="flex flex-wrap gap-2">{engineeringStack.map((skill) => <Badge className="h-7 px-3" key={skill} variant="outline">{skill}</Badge>)}</div></div><Separator /><p className="max-w-xl text-base leading-7 text-muted-foreground">From native mobile experiences to the services and interfaces that support them, I enjoy turning an idea into a polished, practical product.</p><p className="text-sm font-medium">Bina Nusantara University · Information Systems (Applied ERP) · GPA 3.42/4.00</p></div>
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Capabilities</p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">Mobile first.<br />Useful everywhere.</h2>
+          <p className="mt-6 max-w-sm text-base leading-7 text-muted-foreground">From native mobile experiences to the services and interfaces that support them, I enjoy turning an idea into a polished, practical product.</p>
+          <p className="mt-6 text-sm font-medium">Bina Nusantara University · Information Systems (Applied ERP) · GPA 3.42/4.00</p>
+        </div>
+        <StackMindmap branches={skillBranches} usedIn={skillUsedIn} />
       </section>
 
       <section className="bg-primary text-primary-foreground" id="contact"><div className="mx-auto flex max-w-6xl flex-col justify-between gap-12 px-6 py-20 lg:flex-row lg:items-end lg:px-8 lg:py-28"><div><p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground/60">Get in touch</p><h2 className="mt-3 max-w-2xl text-balance text-4xl font-semibold tracking-[-0.05em] sm:text-6xl">Let&apos;s make the next interaction feel effortless.</h2></div><Button className="w-fit bg-background text-foreground hover:bg-background/85" nativeButton={false} render={<a aria-label="Email Victor at hello@victorch.dev" href="mailto:hello@victorch.dev" />} size="lg"><Mail /> hello@victorch.dev</Button></div></section>
