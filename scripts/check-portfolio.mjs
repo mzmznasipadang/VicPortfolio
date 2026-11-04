@@ -7,6 +7,8 @@ assert.ok(readFileSync(new URL('../package.json', import.meta.url), 'utf8').incl
 assert.equal(security.hasSecretExposure?.(`API_${'KEY: redacted'}`), true);
 assert.equal(security.hasSecretExposure?.(`secret_${'token = "redacted"'}`), true);
 assert.equal(security.hasSecretExposure?.(`API_${'KEY: process.env.API_KEY'}`), false);
+assert.equal(security.hasSecretExposure?.(`pass${'word={password}'}`), false, 'JSX props are not secrets');
+assert.equal(security.hasSecretExposure?.(`pass${'word=hunter2'}`), true);
 for (const name of ['api_key', 'accessToken', 'password']) {
   assert.equal(security.hasSecretExposure(JSON.stringify({ [name]: 'redacted' })), true, `Quoted ${name} must be detected`);
 }
