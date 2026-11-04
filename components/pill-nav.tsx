@@ -122,15 +122,15 @@ export function PillNav({ work = [] }: { work?: WorkGroup[] }) {
                 ref={panel}
               >
                 <div className="grid grid-cols-[minmax(11rem,15rem)_1fr] overflow-hidden rounded-3xl border border-border bg-background shadow-2xl">
-                  <div className="max-h-[70vh] space-y-6 overflow-y-auto border-r border-border p-6">
+                  <div className="max-h-[75vh] space-y-4 overflow-y-auto border-r border-border p-6">
                     {work.map((group) => (
                       <div key={group.label}>
                         <p className="text-xs font-medium text-muted-foreground">{group.label}</p>
-                        <ul className="mt-2 space-y-1">
+                        <ul className="mt-1.5 space-y-0.5">
                           {group.items.map((item) => (
                             <li key={item.name}>
                               <a
-                                className={cn('block py-0.5 text-lg font-semibold tracking-tight transition-colors', preview === item ? 'text-foreground' : 'text-muted-foreground/70 hover:text-foreground')}
+                                className={cn('block py-0.5 text-base font-semibold tracking-tight transition-colors', preview === item ? 'text-foreground' : 'text-muted-foreground/70 hover:text-foreground')}
                                 href={item.href ?? '#work'}
                                 onClick={() => setMenuOpen(false)}
                                 onFocus={() => setPreview(item)}

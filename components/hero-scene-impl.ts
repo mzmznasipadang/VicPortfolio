@@ -65,11 +65,13 @@ const ridgeFragment = /* glsl */ `
   void main() {
     float aspect = uResolution.x / uResolution.y;
     float x = vUv.x * aspect;
-    float back = 0.12 + fbm(x * 1.6 + 3.0 + uPointer.x * 0.15 + uTime * 0.01) * 0.14;
-    float front = 0.04 + fbm(x * 2.4 + 11.0 + uPointer.x * 0.35) * 0.09;
+    // Size ridges for an ~800px-tall hero so a tall phone hero doesn't get giant mountains.
+    float k = min(1.0, 800.0 / uResolution.y);
+    float back = (0.12 + fbm(x * 1.6 + 3.0 + uPointer.x * 0.15 + uTime * 0.01) * 0.14) * k;
+    float front = (0.04 + fbm(x * 2.4 + 11.0 + uPointer.x * 0.35) * 0.09) * k;
     float edge = 1.5 / uResolution.y;
 
-    float glow = exp(-max(vUv.y - back, 0.0) * 9.0) * 0.35 * (0.8 + 0.2 * sin(uTime * 0.4 + x));
+    float glow = exp(-max(vUv.y - back, 0.0) * 9.0 / k) * 0.35 * (0.8 + 0.2 * sin(uTime * 0.4 + x));
     vec4 color = vec4(uGlow, glow * step(back, vUv.y));
     float backMask = smoothstep(back + edge, back - edge, vUv.y);
     color = mix(color, vec4(uBack, 1.0), backMask);
